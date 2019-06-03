@@ -5,7 +5,6 @@
  */
 package br.senai.sc.helpdesk.DAO;
 
-import br.senai.sc.helpdesk.BancoDeDados;
 import br.senai.sc.helpdesk.model.Cliente;
 import br.senai.sc.helpdesk.model.ProblemaResolvido;
 import java.sql.ResultSet;
@@ -21,7 +20,7 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
 
     @Override
     public void save(ProblemaResolvido problema) throws SQLException {
-         String[] codigoGerado = {"codigoProRes"};
+         String[] codigoGerado = {"codigo"};
         super.preparedStatementInitialize(
                 "insert into problemaResolvido (codigoPro, codigoTec, tipo, area, dificuldade, urgencia, horaOcorrencia) values (?,?,?,?,?,?,?)",
                 codigoGerado);
@@ -31,15 +30,15 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
         super.prepared.setString(4, problema.getArea());
         super.prepared.setString(5, problema.getDiculdade());
         super.prepared.setString(6, problema.getUrgencia());
-        super.prepared.setString(7, problema.getHoraDeOcorrencia());
+        super.prepared.setInt(7, problema.getHoraDeOcorrencia());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
-            throw new SQLException("Não foi possível cadastrar o novo cliente");
+            throw new SQLException("Não foi possível cadastrar o novo problema");
         }
         
         ResultSet resultSetRows = super.prepared.getGeneratedKeys();
         if (resultSetRows.next()) {
-            problema.setCodigo(resultSetRows.getInt("codigoProRes"));
+            problema.setCodigo(resultSetRows.getInt("codigo"));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -49,17 +48,17 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
     public void update(ProblemaResolvido problema) throws SQLException {
         super.preparedStatementInitialize(
                 "update problemaResolvido set codigoPro = ?, codigoTec = ?, tipo = ?, area = ?, dificuldade = ?, "
-                        + "urgencia = ?, horaOcorrencia = ? where codigoProRes = ?");
+                        + "urgencia = ?, horaOcorrencia = ? where codigo = ?");
         super.prepared.setInt(1, problema.getProblema().getCodigo());
         super.prepared.setInt(2, problema.getTecnico().getCodigo());
         super.prepared.setString(3, problema.getTipo());
         super.prepared.setString(4, problema.getArea());
         super.prepared.setString(5, problema.getDiculdade());
         super.prepared.setString(6, problema.getUrgencia());
-        super.prepared.setString(7, problema.getHoraDeOcorrencia());
+        super.prepared.setInt(7, problema.getHoraDeOcorrencia());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
-            throw new SQLException("Não foi possível aletrar as informações do cliente");
+            throw new SQLException("Não foi possível aletrar as informações do problema");
         }
         super.closePreparedStatement();
     }
@@ -71,7 +70,7 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
         super.prepared.setInt(1, problema.getCodigo());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
-            throw new SQLException("Não foi possível deletar o cliente");
+            throw new SQLException("Não foi possível deletar o problema");
         }
         
         super.closePreparedStatement();
@@ -84,12 +83,12 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {
-            rows.add(new ProblemaResolvido(resultSetRows.getInt("codigoProRes"),
+            rows.add(new ProblemaResolvido(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("tipo"),
                     resultSetRows.getString("area"),
                     resultSetRows.getString("dificuldade"),
                     resultSetRows.getString("urgencia"),
-                    resultSetRows.getString("horaOcorrencia"),
+                    resultSetRows.getInt("horaOcorrencia"),
                     DAOFactory.getTecnicoDAO().getTecnicoByCodigo(resultSetRows.getInt("codigoTec")),
                     DAOFactory.getProblemaDAO().getProblemaByCodigo(resultSetRows.getInt("codigoPro"))));
         }
@@ -102,17 +101,17 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
     @Override
     public List<ProblemaResolvido> getProblemaResolvidoByTecnicoNome(String nome) throws SQLException {
         List<ProblemaResolvido> rows = new ArrayList<>();
-        super.preparedStatementInitialize("select * from problemaResolvido a, tecnico b where a.codigoProRes = b.codigoTec and upper(b.nome) like ?");
+        super.preparedStatementInitialize("select * from problemaResolvido a, tecnico b where a.codigoTec = b.codigo and upper(b.nome) like ?");
         super.prepared.setString(1,"%"+nome+"%");
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {
-            rows.add(new ProblemaResolvido(resultSetRows.getInt("codigoProRes"),
+            rows.add(new ProblemaResolvido(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("tipo"),
                     resultSetRows.getString("area"),
                     resultSetRows.getString("dificuldade"),
                     resultSetRows.getString("urgencia"),
-                    resultSetRows.getString("horaOcorrencia"),
+                    resultSetRows.getInt("horaOcorrencia"),
                     DAOFactory.getTecnicoDAO().getTecnicoByCodigo(resultSetRows.getInt("codigoTec")),
                     DAOFactory.getProblemaDAO().getProblemaByCodigo(resultSetRows.getInt("codigoPro"))));
         }
@@ -130,12 +129,12 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {
-            rows.add(new ProblemaResolvido(resultSetRows.getInt("codigoProRes"),
+            rows.add(new ProblemaResolvido(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("tipo"),
                     resultSetRows.getString("area"),
                     resultSetRows.getString("dificuldade"),
                     resultSetRows.getString("urgencia"),
-                    resultSetRows.getString("horaOcorrencia"),
+                    resultSetRows.getInt("horaOcorrencia"),
                     DAOFactory.getTecnicoDAO().getTecnicoByCodigo(resultSetRows.getInt("codigoTec")),
                     DAOFactory.getProblemaDAO().getProblemaByCodigo(resultSetRows.getInt("codigoPro"))));
         }

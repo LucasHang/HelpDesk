@@ -23,7 +23,7 @@ public class ProblemaResolvido{
     private final StringProperty area = new SimpleStringProperty();
     private final StringProperty dificuldade = new SimpleStringProperty();
     private final StringProperty urgencia = new SimpleStringProperty();
-    private final StringProperty horaDeOcorrencia = new SimpleStringProperty();
+    private final IntegerProperty horaDeOcorrencia = new SimpleIntegerProperty();
 
     
     
@@ -32,7 +32,7 @@ public class ProblemaResolvido{
     }
       
     public ProblemaResolvido(Integer codigo, String tipo, String area, String dificuldade,
-            String urgencia, String horaDeOcorrencia, Tecnico objectTec,Problema objectPro){
+            String urgencia, Integer horaDeOcorrencia, Tecnico objectTec,Problema objectPro){
         
         this.codigo.set(codigo);
         this.tipo.set(tipo);
@@ -121,15 +121,15 @@ public class ProblemaResolvido{
         return this.urgencia;
     }
     
-    public String getHoraDeOcorrencia() {
+    public Integer getHoraDeOcorrencia() {
         return this.horaDeOcorrencia.get();
     }
 
-    public void setHoraDeOcorrencia(String horaDeOcorrencia) {
+    public void setHoraDeOcorrencia(Integer horaDeOcorrencia) {
         this.horaDeOcorrencia.set(horaDeOcorrencia);
     }
 
-    public StringProperty horaDeOcorrenciaProperty() {
+    public IntegerProperty horaDeOcorrenciaProperty() {
         return this.horaDeOcorrencia;
     }
 }

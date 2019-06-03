@@ -5,7 +5,6 @@
  */
 package br.senai.sc.helpdesk.DAO;
 
-import br.senai.sc.helpdesk.BancoDeDados;
 import br.senai.sc.helpdesk.model.Cliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,7 @@ public class clientePostgressDAO extends ConnectionFactory implements clienteDAO
 
     @Override
     public void save(Cliente cliente) throws SQLException {
-        String[] codigoGerado = {"codigoCli"};
+        String[] codigoGerado = {"codigo"};
         super.preparedStatementInitialize(
                 "insert into cliente (nome, email, senha) values (?,?,?)",
                 codigoGerado);
@@ -34,7 +33,7 @@ public class clientePostgressDAO extends ConnectionFactory implements clienteDAO
         
         ResultSet resultSetRows = super.prepared.getGeneratedKeys();
         if (resultSetRows.next()) {
-            cliente.setCodigo(resultSetRows.getInt("codigoCli"));
+            cliente.setCodigo(resultSetRows.getInt("codigo"));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -43,7 +42,7 @@ public class clientePostgressDAO extends ConnectionFactory implements clienteDAO
     @Override
     public void update(Cliente cliente) throws SQLException {
         super.preparedStatementInitialize(
-                "update cliente set nome = ?, email = ?, senha = ? where codigoCli = ?");
+                "update cliente set nome = ?, email = ?, senha = ? where codigo = ?");
         super.prepared.setString(1, cliente.getNome());
         super.prepared.setString(2, cliente.getEmail());
         super.prepared.setString(3, cliente.getSenha());
@@ -58,7 +57,7 @@ public class clientePostgressDAO extends ConnectionFactory implements clienteDAO
     @Override
     public void delete(Cliente cliente) throws SQLException {
         super.preparedStatementInitialize(
-                "delete from cliente where codigoCli = ?");
+                "delete from cliente where codigo = ?");
         super.prepared.setInt(1, cliente.getCodigo());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
@@ -75,7 +74,7 @@ public class clientePostgressDAO extends ConnectionFactory implements clienteDAO
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {
-            rows.add(new Cliente(resultSetRows.getInt("codigoCli"),
+            rows.add(new Cliente(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("nome"),
                     resultSetRows.getString("email"),
                     resultSetRows.getString("senha")));
@@ -94,7 +93,7 @@ public class clientePostgressDAO extends ConnectionFactory implements clienteDAO
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {
-            rows.add(new Cliente(resultSetRows.getInt("codigoCli"),
+            rows.add(new Cliente(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("nome"),
                     resultSetRows.getString("email"),
                     resultSetRows.getString("senha")));
@@ -113,7 +112,7 @@ public class clientePostgressDAO extends ConnectionFactory implements clienteDAO
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         if (resultSetRows.next()) {
-            cliente = (new Cliente(resultSetRows.getInt("codigoCli"),
+            cliente = (new Cliente(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("nome"),
                     resultSetRows.getString("email"),
                     resultSetRows.getString("senha")));
@@ -127,12 +126,12 @@ public class clientePostgressDAO extends ConnectionFactory implements clienteDAO
     @Override
     public Cliente getClienteByCodigo(Integer codigo) throws SQLException {
         Cliente cliente = null;
-        super.preparedStatementInitialize("select * from cliente where codigoCli = ?");
+        super.preparedStatementInitialize("select * from cliente where codigo = ?");
         super.prepared.setInt(1, codigo);
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         if (resultSetRows.next()) {
-            cliente = (new Cliente(resultSetRows.getInt("codigoCli"),
+            cliente = (new Cliente(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("nome"),
                     resultSetRows.getString("email"),
                     resultSetRows.getString("senha")));

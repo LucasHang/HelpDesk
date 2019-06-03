@@ -43,7 +43,7 @@ public class CadastroClienteSceneWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         novoCliente = new Cliente();
-        bindFields();
+        bindFields(novoCliente);
     }    
 
     @FXML
@@ -58,7 +58,7 @@ public class CadastroClienteSceneWindowController implements Initializable {
         txtSenha.getStyleClass().remove("invalido");
         txtSenhaDeNovo.getStyleClass().remove("invalido");
         
-        unBindFields();
+        unbindFields(novoCliente);
         
         try {
             DAOFactory.getClienteDAO().save(novoCliente);
@@ -98,15 +98,19 @@ public class CadastroClienteSceneWindowController implements Initializable {
         return invalido;
     }
     
-    private void bindFields(){
-        txtNome.textProperty().bindBidirectional(novoCliente.getNomeProperty());
-        txtEmail.textProperty().bindBidirectional(novoCliente.getEmailProperty());
-        txtSenha.textProperty().bindBidirectional(novoCliente.getSenhaProperty());
+    private void bindFields(Cliente cliente){
+        if(cliente != null){
+            txtNome.textProperty().bindBidirectional(cliente.getNomeProperty());
+            txtEmail.textProperty().bindBidirectional(cliente.getEmailProperty());
+            txtSenha.textProperty().bindBidirectional(cliente.getSenhaProperty());
+        }
     }
     
-    private void unBindFields(){
-        txtNome.textProperty().unbindBidirectional(novoCliente.getNomeProperty());
-        txtEmail.textProperty().unbindBidirectional(novoCliente.getEmailProperty());
-        txtSenha.textProperty().unbindBidirectional(novoCliente.getSenhaProperty());
+    private void unbindFields(Cliente cliente){
+        if(cliente != null){
+            txtNome.textProperty().unbindBidirectional(cliente.getNomeProperty());
+            txtEmail.textProperty().unbindBidirectional(cliente.getEmailProperty());
+            txtSenha.textProperty().unbindBidirectional(cliente.getSenhaProperty());
+        }
     }
 }

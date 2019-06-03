@@ -5,7 +5,6 @@
  */
 package br.senai.sc.helpdesk.controller;
 
-import br.senai.sc.helpdesk.BancoDeDados;
 import br.senai.sc.helpdesk.BrSenaiScHelpDesk;
 import br.senai.sc.helpdesk.DAO.DAOFactory;
 import br.senai.sc.helpdesk.MeuAlerta;
@@ -44,7 +43,8 @@ public class mainSceneWindowController implements Initializable {
     @FXML
     private TextField txtEmail;
     
-    MeuAlerta alerta = null;
+    MeuAlerta alerta;
+    static String emailLogado;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,9 +53,10 @@ public class mainSceneWindowController implements Initializable {
  
     @FXML
     private void btnEntrarOnAction(ActionEvent event) throws IOException {
-      /*  
+
         try {
             if(loginVerificado()){
+                emailLogado = txtEmail.getText();
                 if(checkBoxTecnico.isSelected()){
                     try {
                         BrSenaiScHelpDesk.mudarTela("tecnico");
@@ -78,8 +79,6 @@ public class mainSceneWindowController implements Initializable {
             Logger.getLogger(mainSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
             alerta.alertaErro("Email Incorreto").showAndWait();
         }
-        */
-      BrSenaiScHelpDesk.mudarTela("tecnico");
     }
 
     @FXML
@@ -94,7 +93,7 @@ public class mainSceneWindowController implements Initializable {
     
     public Boolean loginVerificado () throws SQLException{
         if(checkBoxTecnico.isSelected()){
-            Tecnico tecnico = null;
+            Tecnico tecnico;
             tecnico = DAOFactory.getTecnicoDAO().getTecnicoByEmail(txtEmail.getText());
 
             if(tecnico != null){
@@ -103,7 +102,7 @@ public class mainSceneWindowController implements Initializable {
                 throw new SQLException("Técnico não encontrado");
             }
         }else{
-            Cliente cliente = null;
+            Cliente cliente;
             cliente = DAOFactory.getClienteDAO().getClienteByEmail(txtEmail.getText());
 
             if(cliente != null){

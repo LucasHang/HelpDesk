@@ -5,7 +5,7 @@
  */
 package br.senai.sc.helpdesk.model;
 
-import br.senai.sc.helpdesk.BancoDeDados;
+
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 

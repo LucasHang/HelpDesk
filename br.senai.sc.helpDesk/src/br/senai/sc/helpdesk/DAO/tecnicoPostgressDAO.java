@@ -5,7 +5,6 @@
  */
 package br.senai.sc.helpdesk.DAO;
 
-import br.senai.sc.helpdesk.BancoDeDados;
 import br.senai.sc.helpdesk.model.Tecnico;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,7 +19,7 @@ public class tecnicoPostgressDAO extends ConnectionFactory implements tecnicoDAO
 
     @Override
     public void save(Tecnico tecnico) throws SQLException {
-        String[] codigoGerado = {"codigoTec"};
+        String[] codigoGerado = {"codigo"};
         super.preparedStatementInitialize(
                 "insert into tecnico (nome, email, senha) values (?,?,?)",
                 codigoGerado);
@@ -29,12 +28,12 @@ public class tecnicoPostgressDAO extends ConnectionFactory implements tecnicoDAO
         super.prepared.setString(3, tecnico.getSenha());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
-            throw new SQLException("Não foi possível cadastrar o novo cliente");
+            throw new SQLException("Não foi possível cadastrar o novo tecnico");
         }
         
         ResultSet resultSetRows = super.prepared.getGeneratedKeys();
         if (resultSetRows.next()) {
-            tecnico.setCodigo(resultSetRows.getInt("codigoTec"));
+            tecnico.setCodigo(resultSetRows.getInt("codigo"));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -43,14 +42,14 @@ public class tecnicoPostgressDAO extends ConnectionFactory implements tecnicoDAO
     @Override
     public void update(Tecnico tecnico) throws SQLException {
         super.preparedStatementInitialize(
-                "update tecnico set nome = ?, email = ?, senha = ? where codigoTec = ?");
+                "update tecnico set nome = ?, email = ?, senha = ? where codigo = ?");
         super.prepared.setString(1, tecnico.getNome());
         super.prepared.setString(2, tecnico.getEmail());
         super.prepared.setString(3, tecnico.getSenha());
         super.prepared.setInt(4, tecnico.getCodigo());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
-            throw new SQLException("Não foi possível aletrar as informações do cliente");
+            throw new SQLException("Não foi possível aletrar as informações do tecnico");
         }
         super.closePreparedStatement();
     }
@@ -58,11 +57,11 @@ public class tecnicoPostgressDAO extends ConnectionFactory implements tecnicoDAO
     @Override
     public void delete(Tecnico tecnico) throws SQLException {
         super.preparedStatementInitialize(
-                "delete from tecnico where codigoTec = ?");
+                "delete from tecnico where codigo = ?");
         super.prepared.setInt(1, tecnico.getCodigo());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
-            throw new SQLException("Não foi possível deletar o cliente");
+            throw new SQLException("Não foi possível deletar o tecnico");
         }
         
         super.closePreparedStatement();
@@ -75,7 +74,7 @@ public class tecnicoPostgressDAO extends ConnectionFactory implements tecnicoDAO
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {
-            rows.add(new Tecnico(resultSetRows.getInt("codigoTec"),
+            rows.add(new Tecnico(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("nome"),
                     resultSetRows.getString("email"),
                     resultSetRows.getString("senha")));
@@ -94,7 +93,7 @@ public class tecnicoPostgressDAO extends ConnectionFactory implements tecnicoDAO
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         if (resultSetRows.next()) {
-            tecnico = (new Tecnico(resultSetRows.getInt("codigoTec"),
+            tecnico = (new Tecnico(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("nome"),
                     resultSetRows.getString("email"),
                     resultSetRows.getString("senha")));
@@ -113,7 +112,7 @@ public class tecnicoPostgressDAO extends ConnectionFactory implements tecnicoDAO
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {
-            rows.add(new Tecnico(resultSetRows.getInt("codigoTec"),
+            rows.add(new Tecnico(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("nome"),
                     resultSetRows.getString("email"),
                     resultSetRows.getString("senha")));
@@ -127,12 +126,12 @@ public class tecnicoPostgressDAO extends ConnectionFactory implements tecnicoDAO
     @Override
     public Tecnico getTecnicoByCodigo(Integer codigo) throws SQLException {
         Tecnico tecnico = null;
-        super.preparedStatementInitialize("select * from cliente where codigoTec = ?");
+        super.preparedStatementInitialize("select * from tecnico where codigo = ?");
         super.prepared.setInt(1,codigo);
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         if (resultSetRows.next()) {
-            tecnico = (new Tecnico(resultSetRows.getInt("codigoTec"),
+            tecnico = (new Tecnico(resultSetRows.getInt("codigo"),
                     resultSetRows.getString("nome"),
                     resultSetRows.getString("email"),
                     resultSetRows.getString("senha")));
