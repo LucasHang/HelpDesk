@@ -1,0 +1,62 @@
+.pane{
+	-fx-background-color:  #F0F8FF;
+	-fx-border-color:  #F0F8FF;
+	-fx-border-width: 3px;
+}
+
+.button{
+	-fx-background-radius: 15px;
+	-fx-border-radius: 10px;
+	-fx-background-color:   #FFC0CB;
+	-fx-border-color:  #8A2BE2;
+	-fx-border-width: 2px;
+	
+}
+
+.label{
+	
+	-fx-font-size: 17px;
+	-fx-font-weight: 900;
+}
+
+.label2{
+	-fx-border-width: 0 0 2px 0;
+	-fx-border-color:  #8A2BE2;
+	-fx-font-size: 20px;
+	-fx-font-weight: 700;
+}
+
+.comboBox{
+	-fx-font-size: 15px;
+	-fx-font-weight: 700;
+	-fx-background-radius: 5px;
+	-fx-border-radius: 5px;
+	-fx-background-color:   #A0522D;
+	-fx-border-color:  #EEE8AA;
+	-fx-border-width: 2px;
+}
+
+.textfield{
+	-fx-background-color: #E0FFFF ;
+	-fx-border-color:  #8A2BE2;
+	-fx-border-width: 1px;
+}
+
+.tableview{
+	-fx-background-color:   #FFFFF0;
+	-fx-border-color:  #EEE8AA;
+	-fx-border-width: 2px;
+}
+
+.tablecolumnbase{
+	-fx-background-color:   #A0522D;
+	-fx-border-color:  #EEE8AA;
+	-fx-border-width: 2px;
+}
+
+
+.invalido{
+	-fx-background-color: #FFC0CB ;
+	-fx-border-color:  #FF0000;
+	-fx-border-width: 2px;
+}
