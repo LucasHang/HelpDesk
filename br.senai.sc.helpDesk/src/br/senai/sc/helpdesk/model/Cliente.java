@@ -8,6 +8,8 @@ package br.senai.sc.helpdesk.model;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -17,7 +19,7 @@ public class Cliente extends Usuario{
     
     private final IntegerProperty codigo = new SimpleIntegerProperty();
     
-    
+
     public Cliente(){
         
     }
@@ -29,8 +31,7 @@ public class Cliente extends Usuario{
         this.email.set(email);
         this.senha.set(senha);
     }  
-      
-      
+    
     public Integer getCodigo() {
         return this.codigo.get();
     }

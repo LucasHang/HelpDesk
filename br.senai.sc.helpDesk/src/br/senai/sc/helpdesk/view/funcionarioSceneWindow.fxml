@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@stylesClass.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.FuncionarioSceneWindowController">
+   <children>
+      <Pane fx:id="paneOPane" layoutX="14.0" layoutY="14.0" prefHeight="691.0" prefWidth="1252.0" styleClass="pane">
+         <children>
+            <Label fx:id="lblNomeUsuario" layoutX="28.0" layoutY="30.0" text="Nome Usuário" />
+            <Label fx:id="lblEmailUsuario" layoutX="28.0" layoutY="73.0" text="Nome Email" />
+            <TableView fx:id="tblProblemasResolvidos" layoutX="252.0" layoutY="439.0" prefHeight="233.0" prefWidth="748.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Status" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="status" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="93.0" text="Técnico" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="nomeTec" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="89.0" text="Data&#10;Envio" >
+                  <cellValueFactory>
+                    <PropertyValueFactory property="dataEnvioPro" />
+                  </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="122.0" text="Tipo" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="tipo" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="122.0" text="Área" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="area" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="128.0" text="Dificuldade" >
+                     <cellValueFactory>
+                        <PropertyValueFactory property="dificuldade" />
+                     </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="118.0" text="Urgência" >
+                    <cellValueFactory>
+                        <PropertyValueFactory property="urgencia" />
+                    </cellValueFactory>
+                </TableColumn>
+              </columns>
+            </TableView>
+            <TextArea fx:id="txtDescResolucao" layoutX="269.0" layoutY="240.0" prefHeight="138.0" prefWidth="714.0" promptText="Descreva a resolução do problema" />
+            <Label fx:id="lblTituloTecnico" alignment="CENTER" layoutX="348.0" layoutY="53.0" prefHeight="26.0" prefWidth="71.0" text="Técnico" />
+            <Label layoutX="701.0" layoutY="19.0" text="Descrição" />
+            <Label layoutX="366.0" layoutY="160.0" text="Tipo" />
+            <Label layoutX="530.0" layoutY="160.0" text="Área" />
+            <Label layoutX="665.0" layoutY="159.0" text="Dificuldade" />
+            <Label layoutX="832.0" layoutY="158.0" text="Urgência" />
+            <ComboBox fx:id="comboStatus" layoutX="504.0" layoutY="387.0" prefHeight="32.0" prefWidth="150.0" promptText="Status" styleClass="comboBox" />
+            <Button fx:id="btnRelatar" layoutX="675.0" layoutY="384.0" mnemonicParsing="false" onAction="#btnRelatarOnAction" prefHeight="39.0" prefWidth="97.0" text="Relatar">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <TextField fx:id="txtTecnico" editable="false" layoutX="309.0" layoutY="84.0" />
+            <TextArea fx:id="txtDescricao" editable="false" layoutX="516.0" layoutY="57.0" prefHeight="82.0" prefWidth="427.0" />
+            <TextField fx:id="txtTipo" editable="false" layoutX="310.0" layoutY="190.0" />
+            <TextField fx:id="txtArea" editable="false" layoutX="475.0" layoutY="190.0" />
+            <TextField fx:id="txtDificuldade" editable="false" layoutX="637.0" layoutY="189.0" />
+            <TextField fx:id="txtUrgencia" editable="false" layoutX="794.0" layoutY="188.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

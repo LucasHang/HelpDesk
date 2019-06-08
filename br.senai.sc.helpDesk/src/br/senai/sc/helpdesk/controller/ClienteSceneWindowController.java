@@ -26,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import br.senai.sc.helpdesk.controller.mainSceneWindowController;
 import br.senai.sc.helpdesk.model.Cliente;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -41,10 +42,13 @@ public class ClienteSceneWindowController implements Initializable {
     private Label lblNomeUsuario;
     @FXML
     private Label lblEmailUsuario;
+    @FXML
+    private TextField txtEmpresa;
 
     Cliente clienteLogado;
     MeuAlerta alerta;
     Problema novoProblema;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -69,6 +73,7 @@ public class ClienteSceneWindowController implements Initializable {
         }
         
         txtDescricaoProblema.getStyleClass().remove("invalido");
+        txtEmpresa.getStyleClass().remove("invalido");
         
         unBindFields(novoProblema);
         
@@ -96,19 +101,29 @@ public class ClienteSceneWindowController implements Initializable {
             txtDescricaoProblema.getStyleClass().remove("invalido");
         }
         
+         if(txtEmpresa.textProperty().isNull().get()){
+            txtEmpresa.getStyleClass().add("invalido");
+            invalido = true;
+            
+        }else{
+            txtEmpresa.getStyleClass().remove("invalido");
+        }
+        
         return invalido;
     }
     
     private void bindFields(Problema problema){
         if(problema != null){
-            txtDescricaoProblema.textProperty().bindBidirectional(problema.dataDescricaoProperty());
+            txtDescricaoProblema.textProperty().bindBidirectional(problema.descricaoProperty());
+            txtEmpresa.textProperty().bindBidirectional(problema.empresaProperty());
         }
         
     }
     
     private void unBindFields(Problema problema){
         if(problema != null){
-            txtDescricaoProblema.textProperty().bindBidirectional(problema.dataDescricaoProperty());
+            txtDescricaoProblema.textProperty().bindBidirectional(problema.descricaoProperty());
+            txtEmpresa.textProperty().unbindBidirectional(problema.empresaProperty());
         }
     }
     

@@ -5,6 +5,8 @@
  */
 package br.senai.sc.helpdesk;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -18,12 +20,15 @@ import javafx.stage.Stage;
  */
 public class BrSenaiScHelpDesk extends Application {
     
-     private static Stage TheStage;
+     public static Stage TheStage;
     
      private static Scene cliente;
      private static Scene cadastroCliente;
      private static Scene tecnico;
-     private static Scene cadastroTecnico;
+     private static Scene funcionario;
+    
+ 
+     
      
     @Override
     public void start(Stage stage) throws Exception {
@@ -36,6 +41,7 @@ public class BrSenaiScHelpDesk extends Application {
         
         stage.setScene(scene);
         stage.show();
+        
     }
 
     
@@ -43,26 +49,28 @@ public class BrSenaiScHelpDesk extends Application {
         switch(tela){
             case "cliente":
                 Parent fxmlCliente = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/clienteSceneWindow.fxml"));
-                cliente = new Scene(fxmlCliente, 700, 807);
+                cliente = new Scene(fxmlCliente, 800, 600);
                 TheStage.setScene(cliente);
                 TheStage.show();
                 break;
             case "cadastroCliente" :
                 Parent fxmlCadastroCliente = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/cadastroClienteSceneWindow.fxml"));
-                cadastroCliente = new Scene(fxmlCadastroCliente, 700, 507);
+                cadastroCliente = new Scene(fxmlCadastroCliente, 800, 600);
                 TheStage.setScene(cadastroCliente);
                 TheStage.show();
                 break;
             case "tecnico":
                 Parent fxmlTecnico = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/tecnicoSceneWindow.fxml"));
-                tecnico = new Scene(fxmlTecnico, 800, 607);
+                tecnico = new Scene(fxmlTecnico, 1280, 720);
                 TheStage.setScene(tecnico);
                 TheStage.show();
                 break;
-            case "cadastroTecnico" :
-                Parent fxmlCadastroTecnico = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/cadastroTecnicoSceneWindow.fxml"));
-                cadastroTecnico = new Scene(fxmlCadastroTecnico, 700, 507);
-                TheStage.setScene(cadastroTecnico);
+                
+             case "funcionario" :
+                Parent fxmlFuncionario = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/funcionarioSceneWindow.fxml"));
+                funcionario = new Scene(fxmlFuncionario, 1280, 720);
+                TheStage.close();
+                TheStage.setScene(funcionario);
                 TheStage.show();
                 break;
         }

@@ -45,8 +45,6 @@ public class TecnicoSceneWindowController implements Initializable {
     @FXML
     private ComboBox<String> comboUrgencia;
     @FXML
-    private TextField txtHoraOcorrencia;
-    @FXML
     private Button btnEnviar;
     @FXML
     private Label lblNomeUsuario;
@@ -72,7 +70,6 @@ public class TecnicoSceneWindowController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         novoProblemaResolvido = new ProblemaResolvido();
         
         try {
@@ -109,7 +106,6 @@ public class TecnicoSceneWindowController implements Initializable {
         comboArea.getStyleClass().remove("invalido");
         comboDificuldade.getStyleClass().remove("invalido");
         comboUrgencia.getStyleClass().remove("invalido");
-        txtHoraOcorrencia.getStyleClass().remove("invalido");
         tableProblemas.getStyleClass().remove("invalido");
         
         unbindFields(novoProblemaResolvido);
@@ -160,14 +156,6 @@ public class TecnicoSceneWindowController implements Initializable {
             comboUrgencia.getStyleClass().remove("invalido");
         }
         
-        if(txtHoraOcorrencia.accessibleTextProperty().isNull().get()){
-            txtHoraOcorrencia.getStyleClass().add("invalido");
-            invalido = true;
-            
-        }else{
-            txtHoraOcorrencia.getStyleClass().remove("invalido");
-        }
-        
         if(problemaSelecionado == null){
             tableProblemas.getStyleClass().add("invalido");
         }else{
@@ -183,7 +171,6 @@ public class TecnicoSceneWindowController implements Initializable {
             comboArea.accessibleTextProperty().bindBidirectional(problemaResolvido.areaProperty());
             comboDificuldade.accessibleTextProperty().bindBidirectional(problemaResolvido.dificuldadeProperty());
             comboUrgencia.accessibleTextProperty().bindBidirectional(problemaResolvido.urgenciaProperty());
-            txtHoraOcorrencia.textProperty().bindBidirectional(problemaResolvido.horaDeOcorrenciaProperty(), new NumberStringConverter());
         }
     }
 
@@ -193,7 +180,6 @@ public class TecnicoSceneWindowController implements Initializable {
             comboArea.accessibleTextProperty().unbindBidirectional(problemaResolvido.areaProperty());
             comboDificuldade.accessibleTextProperty().unbindBidirectional(problemaResolvido.dificuldadeProperty());
             comboUrgencia.accessibleTextProperty().unbindBidirectional(problemaResolvido.urgenciaProperty());
-            txtHoraOcorrencia.textProperty().unbindBidirectional(problemaResolvido.horaDeOcorrenciaProperty());
         }
     }
     

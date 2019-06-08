@@ -18,22 +18,37 @@ public class Problema {
     
     private final IntegerProperty codigo = new SimpleIntegerProperty();
     private Cliente requisitante = null;
+    private final StringProperty nomeCli = new SimpleStringProperty();
+    private final StringProperty emailCli = new SimpleStringProperty();
     private final IntegerProperty dataEnvio = new SimpleIntegerProperty();
     private final StringProperty descricao = new SimpleStringProperty();
-    
-    
+    private final StringProperty empresa = new SimpleStringProperty();
+
     public Problema(){
         
     }
       
-    public Problema(Integer codigo, Integer dataEnvio, String descricao, Cliente object){
+    public Problema(Integer codigo, Integer dataEnvio, String descricao, String empresa, Cliente object){
         
         this.codigo.set(codigo);
         this.dataEnvio.set(dataEnvio);
         this.descricao.set(descricao);
+        this.empresa.set(empresa);
         this.requisitante = object;
     }  
     
+    
+    public String getEmpresa() {
+        return this.empresa.get();
+    }
+
+    public void setEmpresa(String value) {
+        this.empresa.set(value);
+    }
+
+    public StringProperty empresaProperty() {
+        return this.empresa;
+    }
     
     public Cliente getCliente() {
         return this.requisitante;
@@ -41,6 +56,24 @@ public class Problema {
 
     public void setCliente(Cliente object) {
         this.requisitante = object;
+        this.nomeCli.set(object.getNome());
+        this.emailCli.set(object.getEmail());
+    }
+    
+    public String getNomeCliente() {
+        return this.nomeCli.get();
+    }
+
+    public StringProperty nomeClienteProperty() {
+        return this.nomeCli;
+    }
+    
+     public String getEmailCliente() {
+        return this.emailCli.get();
+    }
+
+    public StringProperty emailClienteProperty() {
+        return this.emailCli;
     }
     
     public Integer getCodigo() {
@@ -75,7 +108,7 @@ public class Problema {
         this.descricao.set(data);
     }
 
-    public StringProperty dataDescricaoProperty() {
+    public StringProperty descricaoProperty() {
         return this.descricao;
     }
 }

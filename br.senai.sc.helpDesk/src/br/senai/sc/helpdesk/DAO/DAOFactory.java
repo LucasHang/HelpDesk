@@ -23,4 +23,7 @@ public class DAOFactory {
       public static problemaResolvidoDAO getProblemaResolvidoDAO(){
         return new problemaResolvidoPostgressDAO();
     }
+      public static funcionarioDAO getFuncionarioDAO(){
+        return new funcionarioPostgressDAO();
+    }
 }

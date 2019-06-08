@@ -30,4 +30,5 @@ public interface problemaDAO {
     public Problema getProblemaByCodigo(Integer codigo)throws SQLException;
     
     public List<Problema> getProblemaByDataEnvio(Integer data)throws SQLException;
+   
 }

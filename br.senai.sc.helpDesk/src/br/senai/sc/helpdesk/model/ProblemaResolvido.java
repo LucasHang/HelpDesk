@@ -17,43 +17,71 @@ import javafx.beans.property.StringProperty;
 public class ProblemaResolvido{
     
     private final IntegerProperty codigo = new SimpleIntegerProperty();
+    private final StringProperty status = new SimpleStringProperty("Pendente");
     private Problema problema = null;
     private Tecnico requerente = null;
     private final StringProperty tipo = new SimpleStringProperty();
     private final StringProperty area = new SimpleStringProperty();
     private final StringProperty dificuldade = new SimpleStringProperty();
     private final StringProperty urgencia = new SimpleStringProperty();
-    private final IntegerProperty horaDeOcorrencia = new SimpleIntegerProperty();
+    private final StringProperty descResolucao = new SimpleStringProperty();
+    private final StringProperty nomeTec = new SimpleStringProperty();
+    private final IntegerProperty dataEnvioPro = new SimpleIntegerProperty();
 
-    
     
     public ProblemaResolvido(){
         
     }
       
     public ProblemaResolvido(Integer codigo, String tipo, String area, String dificuldade,
-            String urgencia, Integer horaDeOcorrencia, Tecnico objectTec,Problema objectPro){
+            String urgencia,String descricao,String status, Tecnico objectTec,Problema objectPro){
         
         this.codigo.set(codigo);
         this.tipo.set(tipo);
         this.area.set(area);
         this.dificuldade.set(dificuldade);
         this.urgencia.set(urgencia);
-        this.horaDeOcorrencia.set(horaDeOcorrencia);
         this.requerente = objectTec;
         this.problema = objectPro;
+        this.descResolucao.set(descricao);
+        this.status.set(status);
     }  
     
-    public int getCodigo() {
+    public String getDescResolucao() {
+        return this.descResolucao.get();
+    }
+
+    public void setDescResolucao(String value) {
+        this.descResolucao.set(value);
+    }
+
+    public StringProperty descResolucaoProperty() {
+        return this.descResolucao;
+    }
+    
+    
+    public Integer getCodigo() {
         return this.codigo.get();
     }
 
-    public void setCodigo(int value) {
+    public void setCodigo(Integer value) {
         this.codigo.set(value);
     }
 
     public IntegerProperty codigoProperty() {
         return this.codigo;
+    }
+    
+    public String getStatus() {
+        return this.status.get();
+    }
+
+    public void setStatus(String value) {
+        this.status.set(value);
+    }
+
+    public StringProperty StatusProperty() {
+        return this.status;
     }
     
     public Problema getProblema() {
@@ -62,6 +90,16 @@ public class ProblemaResolvido{
 
     public void setProblema(Problema object) {
         this.problema = object;
+        this.dataEnvioPro.set(object.getDataEnvio());
+    }
+    
+     public Integer getDataEnvioPro() {
+        return this.dataEnvioPro.get();
+    }
+
+
+    public IntegerProperty dataEnvioProProperty() {
+        return this.dataEnvioPro;
     }
     
     public Tecnico getTecnico() {
@@ -70,6 +108,15 @@ public class ProblemaResolvido{
 
     public void setTecnico(Tecnico tecnico) {
         this.requerente = tecnico;
+        this.nomeTec.set(tecnico.getNome());
+    }
+    
+    public String getNomeTec() {
+        return nomeTec.get();
+    }
+
+    public StringProperty nomeTecProperty() {
+        return nomeTec;
     }
     
     
@@ -121,15 +168,4 @@ public class ProblemaResolvido{
         return this.urgencia;
     }
     
-    public Integer getHoraDeOcorrencia() {
-        return this.horaDeOcorrencia.get();
-    }
-
-    public void setHoraDeOcorrencia(Integer horaDeOcorrencia) {
-        this.horaDeOcorrencia.set(horaDeOcorrencia);
-    }
-
-    public IntegerProperty horaDeOcorrenciaProperty() {
-        return this.horaDeOcorrencia;
-    }
 }

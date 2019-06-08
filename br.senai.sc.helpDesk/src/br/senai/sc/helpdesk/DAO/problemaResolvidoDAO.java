@@ -26,4 +26,6 @@ public interface problemaResolvidoDAO {
     public List<ProblemaResolvido> getProblemaResolvidoByTecnicoNome(String nome)throws SQLException;
     
     public List<ProblemaResolvido> getProblemaResolvidoByUrgencia(String urgencia)throws SQLException;
+    
+    public List<ProblemaResolvido> getProblemaResolvidoByEmpresaEArea(String empresa,String area)throws SQLException;
 }

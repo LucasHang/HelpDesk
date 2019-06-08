@@ -23,6 +23,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -42,18 +43,17 @@ public class mainSceneWindowController implements Initializable {
     private CheckBox checkBoxTecnico;
     @FXML
     private TextField txtEmail;
-    
-    MeuAlerta alerta;
+ 
+     MeuAlerta alerta;
     static String emailLogado;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
     }    
  
     @FXML
     private void btnEntrarOnAction(ActionEvent event) throws IOException {
-
+/*
         try {
             if(loginVerificado()){
                 emailLogado = txtEmail.getText();
@@ -78,7 +78,8 @@ public class mainSceneWindowController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(mainSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
             alerta.alertaErro("Email Incorreto").showAndWait();
-        }
+        }*/
+        BrSenaiScHelpDesk.mudarTela("funcionario");
     }
 
     @FXML

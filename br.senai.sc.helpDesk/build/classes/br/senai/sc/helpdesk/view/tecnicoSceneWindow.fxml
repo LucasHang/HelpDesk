@@ -10,21 +10,21 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="737.0" prefWidth="1010.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.TecnicoSceneWindowController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.TecnicoSceneWindowController">
    <children>
-      <Pane layoutX="14.0" layoutY="14.0" prefHeight="710.0" prefWidth="391.0" styleClass="pane" stylesheets="@stylesClass.css">
+      <Pane layoutX="15.0" layoutY="14.0" prefHeight="696.0" prefWidth="412.0" styleClass="pane" stylesheets="@stylesClass.css">
          <children>
-            <ComboBox fx:id="comboTipo" layoutX="38.0" layoutY="158.0" prefHeight="25.0" prefWidth="198.0" />
+            <ComboBox fx:id="comboTipo" layoutX="38.0" layoutY="158.0" prefHeight="25.0" prefWidth="238.0" />
             <Label layoutX="38.0" layoutY="117.0" text="Tipo:" />
-            <ComboBox fx:id="comboArea" layoutX="38.0" layoutY="259.0" prefHeight="25.0" prefWidth="198.0" />
+            <ComboBox fx:id="comboArea" layoutX="38.0" layoutY="259.0" prefHeight="25.0" prefWidth="238.0" />
             <Label layoutX="40.0" layoutY="225.0" text="Área:" />
-            <ComboBox fx:id="comboDificuldade" layoutX="38.0" layoutY="372.0" prefHeight="25.0" prefWidth="198.0" />
+            <ComboBox fx:id="comboDificuldade" layoutX="38.0" layoutY="372.0" prefHeight="25.0" prefWidth="238.0" />
             <Label layoutX="38.0" layoutY="334.0" text="Dificuldade:" />
-            <ComboBox fx:id="comboUrgencia" layoutX="38.0" layoutY="475.0" prefHeight="25.0" prefWidth="198.0" />
+            <ComboBox fx:id="comboUrgencia" layoutX="38.0" layoutY="475.0" prefHeight="25.0" prefWidth="238.0" />
             <Label layoutX="37.0" layoutY="442.0" text="Urgência:" />
             <TextField fx:id="txtHoraOcorrencia" layoutX="215.0" layoutY="552.0" prefHeight="25.0" prefWidth="96.0" />
             <Label layoutX="38.0" layoutY="552.0" text="Hora de ocorrência:" />
-            <Button fx:id="btnEnviar" layoutX="137.0" layoutY="623.0" mnemonicParsing="false" onAction="#btnEnviarOnAction" prefHeight="46.0" prefWidth="96.0" text="Enviar">
+            <Button fx:id="btnEnviar" layoutX="147.0" layoutY="624.0" mnemonicParsing="false" onAction="#btnEnviarOnAction" prefHeight="46.0" prefWidth="96.0" text="Enviar">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -33,11 +33,11 @@
             <Label fx:id="lblEmailUsuario" layoutX="23.0" layoutY="51.0" text="Email Usuario" />
          </children>
       </Pane>
-      <Pane layoutX="412.0" layoutY="14.0" prefHeight="710.0" prefWidth="586.0" styleClass="pane" stylesheets="@stylesClass.css">
+      <Pane layoutX="448.0" layoutY="14.0" prefHeight="696.0" prefWidth="618.0" styleClass="pane" stylesheets="@stylesClass.css">
          <children>
-            <Label fx:id="lblNomeCliente" layoutX="206.0" layoutY="34.0" text="Nome do requisitante" />
-            <Label fx:id="lblDescricaoProblema" layoutX="21.0" layoutY="113.0" prefHeight="153.0" prefWidth="544.0" text="Descrição" textAlignment="CENTER" />
-            <TableView fx:id="tableProblemas" layoutX="21.0" layoutY="355.0" prefHeight="343.0" prefWidth="544.0">
+            <Label fx:id="lblNomeCliente" alignment="CENTER" layoutX="222.0" layoutY="33.0" text="Nome do requisitante" />
+            <Label fx:id="lblDescricaoProblema" alignment="CENTER" layoutX="21.0" layoutY="113.0" prefHeight="153.0" prefWidth="544.0" text="Descrição" textAlignment="CENTER" />
+            <TableView fx:id="tableProblemas" layoutX="37.0" layoutY="353.0" prefHeight="343.0" prefWidth="544.0">
               <columns>
                 <TableColumn prefWidth="104.0" text="Nome" />
                 <TableColumn prefWidth="139.0" text="Email" />
