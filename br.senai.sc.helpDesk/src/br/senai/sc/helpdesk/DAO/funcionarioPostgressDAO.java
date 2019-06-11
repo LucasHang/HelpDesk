@@ -90,5 +90,26 @@ public class funcionarioPostgressDAO extends ConnectionFactory implements funcio
 
         return rows;
     }
+
+    @Override
+    public Funcionario getFuncionarioByEmail(String email) throws SQLException {
+       Funcionario funcionario = null;
+        super.preparedStatementInitialize("select * from funcionario where upper(email) like ?");
+        super.prepared.setString(1,"%"+email.toUpperCase()+"%");
+        super.prepared.execute();
+        ResultSet resultSetRows = super.prepared.getResultSet();
+        if (resultSetRows.next()) {
+            funcionario = (new Funcionario(resultSetRows.getInt("codigo"),
+                    resultSetRows.getString("nome"),
+                    resultSetRows.getString("senha"),
+                    resultSetRows.getString("email"),
+                    resultSetRows.getString("empresa"),
+                    resultSetRows.getString("area")));
+        }
+        resultSetRows.close();
+        super.closePreparedStatement();
+
+        return funcionario;
+    }
     
 }

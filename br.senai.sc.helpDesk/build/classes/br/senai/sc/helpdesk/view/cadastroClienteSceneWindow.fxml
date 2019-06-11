@@ -8,24 +8,23 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="485.0" prefWidth="622.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="br.senai.sc.helpdesk.controller.CadastroClienteSceneWindowController">
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.CadastroClienteSceneWindowController">
    <children>
-      <Pane layoutX="15.0" layoutY="16.0" prefHeight="453.0" prefWidth="592.0" styleClass="pane" stylesheets="@stylesClass.css">
+      <Pane layoutX="15.0" layoutY="16.0" prefHeight="568.0" prefWidth="769.0" styleClass="pane" stylesheets="@stylesClass.css">
          <children>
-            <Button fx:id="btnCadastrarCliente" layoutX="238.0" layoutY="375.0" mnemonicParsing="false" onAction="#btnCadastrarClienteOnAction" prefHeight="47.0" prefWidth="127.0" text="Cadastrar">
+            <Button fx:id="btnCadastrarCliente" layoutX="327.0" layoutY="425.0" mnemonicParsing="false" onAction="#btnCadastrarClienteOnAction" prefHeight="47.0" prefWidth="127.0" text="Cadastrar">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Label layoutX="80.0" layoutY="46.0" text="Nome completo:" />
-            <Label layoutX="167.0" layoutY="116.0" text="Email:" />
-            <Label layoutX="275.0" layoutY="190.0" text="Senha:" />
-            <PasswordField fx:id="txtSenha" layoutX="341.0" layoutY="189.0" prefHeight="27.0" prefWidth="171.0" styleClass="textfield" />
-            <TextField fx:id="txtNome" layoutX="226.0" layoutY="47.0" prefHeight="25.0" prefWidth="286.0" styleClass="textfield" />
-            <TextField fx:id="txtEmail" layoutX="226.0" layoutY="115.0" prefHeight="27.0" prefWidth="286.0" styleClass="textfield" />
-            <PasswordField fx:id="txtSenhaDeNovo" layoutX="341.0" layoutY="255.0" prefHeight="25.0" prefWidth="171.0" styleClass="textfield" />
-            <Label layoutX="207.0" layoutY="256.0" text="Repita a senha:" />
+            <Label layoutX="169.0" layoutY="96.0" text="Nome completo:" />
+            <Label layoutX="256.0" layoutY="166.0" text="Email:" />
+            <Label layoutX="364.0" layoutY="240.0" text="Senha:" />
+            <PasswordField fx:id="txtSenha" layoutX="430.0" layoutY="239.0" prefHeight="27.0" prefWidth="171.0" styleClass="textfield" />
+            <TextField fx:id="txtNome" layoutX="315.0" layoutY="97.0" prefHeight="25.0" prefWidth="286.0" styleClass="textfield" />
+            <TextField fx:id="txtEmail" layoutX="315.0" layoutY="165.0" prefHeight="27.0" prefWidth="286.0" styleClass="textfield" />
+            <PasswordField fx:id="txtSenhaDeNovo" layoutX="430.0" layoutY="305.0" prefHeight="25.0" prefWidth="171.0" styleClass="textfield" />
+            <Label layoutX="296.0" layoutY="306.0" text="Repita a senha:" />
          </children>
       </Pane>
    </children>

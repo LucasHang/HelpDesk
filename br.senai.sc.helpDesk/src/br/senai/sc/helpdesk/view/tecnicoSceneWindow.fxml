@@ -5,22 +5,22 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.TecnicoSceneWindowController">
    <children>
       <Pane layoutX="15.0" layoutY="14.0" prefHeight="696.0" prefWidth="484.0" styleClass="pane" stylesheets="@stylesClass.css">
          <children>
-            <ComboBox fx:id="comboTipo" layoutX="38.0" layoutY="176.0" prefHeight="25.0" prefWidth="277.0" />
+            <ComboBox fx:id="comboTipo" layoutX="38.0" layoutY="176.0" prefHeight="25.0" prefWidth="277.0" styleClass="comboBox" />
             <Label layoutX="38.0" layoutY="135.0" text="Tipo:" />
-            <ComboBox fx:id="comboArea" layoutX="38.0" layoutY="280.0" prefHeight="25.0" prefWidth="277.0" />
+            <ComboBox fx:id="comboArea" layoutX="38.0" layoutY="280.0" prefHeight="25.0" prefWidth="277.0" styleClass="comboBox" />
             <Label layoutX="40.0" layoutY="246.0" text="Área:" />
-            <ComboBox fx:id="comboDificuldade" layoutX="38.0" layoutY="400.0" prefHeight="25.0" prefWidth="277.0" />
+            <ComboBox fx:id="comboDificuldade" layoutX="38.0" layoutY="400.0" prefHeight="25.0" prefWidth="277.0" styleClass="comboBox" />
             <Label layoutX="38.0" layoutY="362.0" text="Dificuldade:" />
-            <ComboBox fx:id="comboUrgencia" layoutX="39.0" layoutY="512.0" prefHeight="25.0" prefWidth="277.0" />
+            <ComboBox fx:id="comboUrgencia" layoutX="39.0" layoutY="512.0" prefHeight="25.0" prefWidth="277.0" styleClass="comboBox" />
             <Label layoutX="38.0" layoutY="479.0" text="Urgência:" />
             <Button fx:id="btnEnviar" layoutX="194.0" layoutY="607.0" mnemonicParsing="false" onAction="#btnEnviarOnAction" prefHeight="46.0" prefWidth="96.0" text="Enviar">
                <font>
@@ -37,22 +37,22 @@
             <Label fx:id="lblDescricaoProblema" alignment="CENTER" layoutX="43.0" layoutY="114.0" prefHeight="193.0" prefWidth="660.0" text="Descrição" textAlignment="CENTER" />
             <TableView fx:id="tableProblemas" layoutX="47.0" layoutY="348.0" prefHeight="343.0" prefWidth="660.0">
               <columns>
-                <TableColumn prefWidth="127.0" text="Nome" >
+                <TableColumn prefWidth="127.0" text="Nome">
                     <cellValueFactory>
                         <PropertyValueFactory property="nomeCli" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="138.0" text="Email" >
+                <TableColumn prefWidth="138.0" text="Email">
                     <cellValueFactory>
                         <PropertyValueFactory property="emailCli" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="281.0" text="Descrição" >
+                <TableColumn prefWidth="281.0" text="Descrição">
                     <cellValueFactory>
                         <PropertyValueFactory property="descricao" />
                     </cellValueFactory>
                 </TableColumn>
-                  <TableColumn prefWidth="113.0" text="Data &#10;Envio&#10;" >
+                  <TableColumn prefWidth="113.0" text="Data &#10;Envio&#10;">
                     <cellValueFactory>
                         <PropertyValueFactory property="dataEnvio" />
                     </cellValueFactory>

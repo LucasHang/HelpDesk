@@ -25,6 +25,7 @@ public class ProblemaResolvido{
     private final StringProperty dificuldade = new SimpleStringProperty();
     private final StringProperty urgencia = new SimpleStringProperty();
     private final StringProperty descResolucao = new SimpleStringProperty();
+    
     private final StringProperty nomeTec = new SimpleStringProperty();
     private final IntegerProperty dataEnvioPro = new SimpleIntegerProperty();
 
@@ -42,7 +43,9 @@ public class ProblemaResolvido{
         this.dificuldade.set(dificuldade);
         this.urgencia.set(urgencia);
         this.requerente = objectTec;
+        this.nomeTec.set(objectTec.getNome());
         this.problema = objectPro;
+        this.dataEnvioPro.set(objectPro.getDataEnvio());
         this.descResolucao.set(descricao);
         this.status.set(status);
     }  

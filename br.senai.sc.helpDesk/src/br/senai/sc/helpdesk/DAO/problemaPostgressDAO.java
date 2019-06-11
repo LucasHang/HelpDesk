@@ -24,8 +24,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                 "insert into problema (codigoCli, empresa, dataEnvio, descricao) values (?,?,?,?)",
                 codigoGerado);
         super.prepared.setInt(1, problema.getCliente().getCodigo());
-        super.prepared.setInt(2, problema.getDataEnvio());
-        super.prepared.setString(3, problema.getDescricao());
+        super.prepared.setString(2, problema.getEmpresa());
+        super.prepared.setInt(3, problema.getDataEnvio());
+        super.prepared.setString(4, problema.getDescricao());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
             throw new SQLException("Não foi possível cadastrar o novo problema");
@@ -79,7 +80,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -99,7 +102,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -119,7 +124,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -139,7 +146,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigo"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigo")),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -150,7 +159,7 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
     @Override
     public Problema getProblemaByCodigo(Integer codigo) throws SQLException {
         Problema problema = null;
-        super.preparedStatementInitialize("select * from cliente where codigo = ?");
+        super.preparedStatementInitialize("select * from problema where codigo = ?");
         super.prepared.setInt(1, codigo);
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
@@ -159,7 +168,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
         }
         resultSetRows.close();
         super.closePreparedStatement();

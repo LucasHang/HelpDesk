@@ -5,9 +5,11 @@
  */
 package br.senai.sc.helpdesk.controller;
 
+import br.senai.sc.helpdesk.BrSenaiScHelpDesk;
 import br.senai.sc.helpdesk.DAO.DAOFactory;
 import br.senai.sc.helpdesk.MeuAlerta;
 import br.senai.sc.helpdesk.model.Cliente;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -62,9 +64,15 @@ public class CadastroClienteSceneWindowController implements Initializable {
         
         try {
             DAOFactory.getClienteDAO().save(novoCliente);
+            try {
+                BrSenaiScHelpDesk.mudarTela("login");
+            } catch (IOException ex) {
+                Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                alerta.alertaErro(ex.getMessage()).show();
+            }
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage());
+            alerta.alertaErro(ex.getMessage()).show();
         }
     }
     
@@ -100,17 +108,17 @@ public class CadastroClienteSceneWindowController implements Initializable {
     
     private void bindFields(Cliente cliente){
         if(cliente != null){
-            txtNome.textProperty().bindBidirectional(cliente.getNomeProperty());
-            txtEmail.textProperty().bindBidirectional(cliente.getEmailProperty());
-            txtSenha.textProperty().bindBidirectional(cliente.getSenhaProperty());
+            txtNome.textProperty().bindBidirectional(cliente.nomeProperty());
+            txtEmail.textProperty().bindBidirectional(cliente.emailProperty());
+            txtSenha.textProperty().bindBidirectional(cliente.senhaProperty());
         }
     }
     
     private void unbindFields(Cliente cliente){
         if(cliente != null){
-            txtNome.textProperty().unbindBidirectional(cliente.getNomeProperty());
-            txtEmail.textProperty().unbindBidirectional(cliente.getEmailProperty());
-            txtSenha.textProperty().unbindBidirectional(cliente.getSenhaProperty());
+            txtNome.textProperty().unbindBidirectional(cliente.nomeProperty());
+            txtEmail.textProperty().unbindBidirectional(cliente.emailProperty());
+            txtSenha.textProperty().unbindBidirectional(cliente.senhaProperty());
         }
     }
 }

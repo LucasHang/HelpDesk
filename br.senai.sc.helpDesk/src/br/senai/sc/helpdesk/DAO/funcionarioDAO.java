@@ -22,4 +22,6 @@ public interface funcionarioDAO {
     public void delete(Funcionario conta)throws SQLException;
     
     public List<Funcionario> getAll()throws SQLException;
+    
+    public Funcionario getFuncionarioByEmail(String email)throws SQLException;
 }

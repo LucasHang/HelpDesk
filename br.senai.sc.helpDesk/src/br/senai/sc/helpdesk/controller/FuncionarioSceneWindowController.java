@@ -5,11 +5,17 @@
  */
 package br.senai.sc.helpdesk.controller;
 
+import br.senai.sc.helpdesk.DAO.DAOFactory;
+import br.senai.sc.helpdesk.MeuAlerta;
+import br.senai.sc.helpdesk.model.Funcionario;
 import br.senai.sc.helpdesk.model.ProblemaResolvido;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.ReadOnlyDoubleWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -36,13 +42,9 @@ public class FuncionarioSceneWindowController implements Initializable {
     @FXML
     private Label lblEmailUsuario;
     @FXML
-    private Label lblTituloTecnico;
-    @FXML
     private TableView<ProblemaResolvido> tblProblemasResolvidos;
     @FXML
-    private TextArea txtDescResolucao;
-    @FXML
-    private ComboBox<String> comboStatus;   
+    private TextArea txtDescResolucao;   
     @FXML
     private TextField txtTecnico;
     @FXML
@@ -59,20 +61,112 @@ public class FuncionarioSceneWindowController implements Initializable {
     private Pane paneOPane;
     @FXML
     private Button btnRelatar;
+    @FXML
+    private TextField txtStatus;
     
-    
-    List<String> status = Arrays.asList("Pendente","Em andamento","Resolvido");
    
+    MeuAlerta alerta;
+    ProblemaResolvido problemaSelecionado;
+    Funcionario funcionarioLogado;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        comboStatus.setItems(FXCollections.observableArrayList(status));
+        
+        try {
+            funcionarioLogado = DAOFactory.getFuncionarioDAO().getFuncionarioByEmail(mainSceneWindowController.emailLogado);
+        } catch (SQLException ex) {
+            Logger.getLogger(TecnicoSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            alerta.alertaErro(ex.getMessage()).show();
+        }
+        
+        try {
+            tblProblemasResolvidos.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaResolvidoDAO().
+                    getProblemaResolvidoByEmpresaEArea(funcionarioLogado.getEmpresa(), funcionarioLogado.getArea())));
+        } catch (SQLException ex) {
+            Logger.getLogger(FuncionarioSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            alerta.alertaErro(ex.getMessage()).show();
+        }
+                
+        lblNomeUsuario.setText(funcionarioLogado.getNome());
+        lblEmailUsuario.setText(funcionarioLogado.getEmail());
+        
+        
+        tblProblemasResolvidos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            unbindFields(oldValue);
+            bindFields(newValue);  
+            problemaSelecionado = newValue;
+        });
+        
     }    
 
     @FXML
     private void btnRelatarOnAction(ActionEvent event) {
+        if(verificaFields()){
+            return;
+        }
+        
+        txtStatus.getStyleClass().remove("invalido");
+        txtDescResolucao.getStyleClass().remove("invalido");
+        
+        unbindFields(problemaSelecionado);
+        
+        try {
+            DAOFactory.getProblemaResolvidoDAO().update(problemaSelecionado);
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            alerta.alertaErro(ex.getMessage()).show();
+        }
+    }
+ 
+    
+    private Boolean verificaFields(){
+        Boolean invalido = false;
+        
+        if(txtDescResolucao.textProperty().isNull().get()){
+            txtDescResolucao.getStyleClass().add("invalido");
+            invalido = true;
+            
+        }else{
+            txtDescResolucao.getStyleClass().remove("invalido");
+        }
+        
+        
+        if(txtStatus.textProperty().isNull().get()){
+            txtStatus.getStyleClass().add("invalido");
+            invalido = true;
+            
+        }else{
+            txtStatus.getStyleClass().remove("invalido");
+        }
+        
+        return invalido;
     }
     
+    private void bindFields(ProblemaResolvido problemaResolvido) {
+        if (problemaResolvido != null) {
+            txtStatus.textProperty().bindBidirectional(problemaResolvido.tipoProperty());
+            txtDescResolucao.textProperty().bindBidirectional(problemaResolvido.descResolucaoProperty());
+            txtTecnico.textProperty().bind(problemaResolvido.getTecnico().nomeProperty());
+            txtDescricao.textProperty().bind(problemaResolvido.getProblema().descricaoProperty());
+            txtArea.textProperty().bind(problemaResolvido.areaProperty());
+            txtDificuldade.textProperty().bind(problemaResolvido.dificuldadeProperty());
+            txtTipo.textProperty().bind(problemaResolvido.tipoProperty());
+            txtUrgencia.textProperty().bind(problemaResolvido.urgenciaProperty());
+        }
+    }
+
+    private void unbindFields(ProblemaResolvido problemaResolvido) {
+        if (problemaResolvido != null) {
+            txtStatus.textProperty().unbindBidirectional(problemaResolvido.tipoProperty());
+            txtDescResolucao.textProperty().unbindBidirectional(problemaResolvido.descResolucaoProperty());
+            problemaResolvido.getTecnico().nomeProperty().unbind();
+            problemaResolvido.getProblema().descricaoProperty().unbind();
+            problemaResolvido.areaProperty().unbind();
+            problemaResolvido.dificuldadeProperty().unbind();
+            problemaResolvido.tipoProperty().unbind();
+            problemaResolvido.urgenciaProperty().unbind();
+        }
+    }
 }

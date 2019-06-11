@@ -26,6 +26,7 @@ public class BrSenaiScHelpDesk extends Application {
      private static Scene cadastroCliente;
      private static Scene tecnico;
      private static Scene funcionario;
+     private static Scene login;
     
  
      
@@ -47,21 +48,31 @@ public class BrSenaiScHelpDesk extends Application {
     
     public static void mudarTela(String tela) throws IOException{
         switch(tela){
+            case "login":
+                Parent fxmlLogin = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/mainSceneWindow.fxml"));
+                login = new Scene(fxmlLogin, 425, 553);
+                TheStage.close();
+                TheStage.setScene(login);
+                TheStage.show();
+                break;
             case "cliente":
                 Parent fxmlCliente = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/clienteSceneWindow.fxml"));
                 cliente = new Scene(fxmlCliente, 800, 600);
+                TheStage.close();
                 TheStage.setScene(cliente);
                 TheStage.show();
                 break;
             case "cadastroCliente" :
                 Parent fxmlCadastroCliente = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/cadastroClienteSceneWindow.fxml"));
                 cadastroCliente = new Scene(fxmlCadastroCliente, 800, 600);
+                TheStage.close();
                 TheStage.setScene(cadastroCliente);
                 TheStage.show();
                 break;
             case "tecnico":
                 Parent fxmlTecnico = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/tecnicoSceneWindow.fxml"));
                 tecnico = new Scene(fxmlTecnico, 1280, 720);
+                TheStage.close();
                 TheStage.setScene(tecnico);
                 TheStage.show();
                 break;

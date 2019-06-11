@@ -59,7 +59,7 @@ public class TecnicoSceneWindowController implements Initializable {
 
     
     List<String> tipos = Arrays.asList("TI", "DBA");
-    List<String> area = Arrays.asList("Financeiro", "Cadastros");
+    List<String> area = Arrays.asList("Financeiro", "Cadastros","Design");
     List<String> dificuldade = Arrays.asList("Fácil", "Dificil","Meu amigo...");
     List<String> urgencia = Arrays.asList("Urgente", "Pode esperar");
     
@@ -70,25 +70,38 @@ public class TecnicoSceneWindowController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        novoProblemaResolvido = new ProblemaResolvido();
         
-        try {
-            tecnicoLogado = DAOFactory.getTecnicoDAO().getTecnicoByEmail(mainSceneWindowController.emailLogado);
-        } catch (SQLException ex) {
-            Logger.getLogger(TecnicoSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage());
-        }
-        lblNomeUsuario.setText(tecnicoLogado.getNome());
-        lblEmailUsuario.setText(tecnicoLogado.getEmail());
+        novoProblemaResolvido = new ProblemaResolvido();
         
         comboTipo.setItems(FXCollections.observableArrayList(tipos));
         comboArea.setItems(FXCollections.observableArrayList(area));
         comboDificuldade.setItems(FXCollections.observableArrayList(dificuldade));
         comboUrgencia.setItems(FXCollections.observableArrayList(urgencia));
         
+        try {
+            tecnicoLogado = DAOFactory.getTecnicoDAO().getTecnicoByEmail(mainSceneWindowController.emailLogado);
+        } catch (SQLException ex) {
+            Logger.getLogger(TecnicoSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            alerta.alertaErro(ex.getMessage()).show();
+        }
+        
+        lblNomeUsuario.setText(tecnicoLogado.getNome());
+        lblEmailUsuario.setText(tecnicoLogado.getEmail());
+        
+        
+        
+        try {
+            tableProblemas.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaDAO().getAll()));
+        } catch (SQLException ex) {
+            Logger.getLogger(TecnicoSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            alerta.alertaErro(ex.getMessage()).show();
+        }
+ 
+        
+        
         tableProblemas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            lblNomeCliente.setText(oldValue.getCliente().getNome());
-            lblDescricaoProblema.setText(newValue.getDescricao());
+            unbindLabels(oldValue);
+            bindLabels(newValue);
             problemaSelecionado = newValue;
         });
         
@@ -116,7 +129,7 @@ public class TecnicoSceneWindowController implements Initializable {
             DAOFactory.getProblemaResolvidoDAO().save(novoProblemaResolvido);
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage());
+            alerta.alertaErro(ex.getMessage()).show();
         }
         
     }
@@ -183,5 +196,13 @@ public class TecnicoSceneWindowController implements Initializable {
         }
     }
     
+    private void bindLabels(Problema problemaSelecionado){
+        lblNomeCliente.textProperty().bind(problemaSelecionado.getCliente().nomeProperty());
+        lblDescricaoProblema.textProperty().bind(problemaSelecionado.descricaoProperty());
+    }
     
+    private void unbindLabels(Problema problemaSelecionado){
+        problemaSelecionado.getCliente().nomeProperty().unbind();
+        problemaSelecionado.descricaoProperty().unbind();
+    }
 }

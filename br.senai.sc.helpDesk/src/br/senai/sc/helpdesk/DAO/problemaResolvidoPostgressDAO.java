@@ -22,14 +22,15 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
     public void save(ProblemaResolvido problema) throws SQLException {
          String[] codigoGerado = {"codigo"};
         super.preparedStatementInitialize(
-                "insert into problemaResolvido (codigoPro, status, codigoTec, tipo, area, dificuldade, urgencia, descResolucao) values (?,?,?,?,?,?,?,?)",
+                "insert into problemaResolvido (codigoPro, codigoTec, status, tipo, area, dificuldade, urgencia) values (?,?,?,?,?,?,?)",
                 codigoGerado);
         super.prepared.setInt(1, problema.getProblema().getCodigo());
         super.prepared.setInt(2, problema.getTecnico().getCodigo());
-        super.prepared.setString(3, problema.getTipo());
-        super.prepared.setString(4, problema.getArea());
-        super.prepared.setString(5, problema.getDiculdade());
-        super.prepared.setString(6, problema.getUrgencia());
+        super.prepared.setString(3, problema.getStatus());
+        super.prepared.setString(4, problema.getTipo());
+        super.prepared.setString(5, problema.getArea());
+        super.prepared.setString(6, problema.getDiculdade());
+        super.prepared.setString(7, problema.getUrgencia());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
             throw new SQLException("Não foi possível cadastrar o novo problema");
@@ -46,17 +47,11 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
     @Override
     public void update(ProblemaResolvido problema) throws SQLException {
         super.preparedStatementInitialize(
-                "update problemaResolvido set codigoPro = ?, codigoTec = ?, status = ?, tipo = ?, area = ?, dificuldade = ?, "
-                        + "urgencia = ?, descResolucao = ? where codigo = ?");
-        super.prepared.setInt(1, problema.getProblema().getCodigo());
-        super.prepared.setInt(2, problema.getTecnico().getCodigo());
-        super.prepared.setString(3, problema.getStatus());
-        super.prepared.setString(4, problema.getTipo());
-        super.prepared.setString(5, problema.getArea());
-        super.prepared.setString(6, problema.getDiculdade());
-        super.prepared.setString(7, problema.getDescResolucao());
-        super.prepared.setString(8, problema.getUrgencia());
-        super.prepared.setInt(9, problema.getCodigo());
+                "update problemaResolvido set status = ?, descResolucao = ? where codigo = ?");
+
+        super.prepared.setString(1, problema.getStatus());     
+        super.prepared.setString(2, problema.getDescResolucao());
+        super.prepared.setInt(3, problema.getCodigo());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
             throw new SQLException("Não foi possível aletrar as informações do problema");

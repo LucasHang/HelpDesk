@@ -27,7 +27,7 @@ public class Usuario {
         this.nome.set(nome);
     }
     
-    public StringProperty getNomeProperty() {
+    public StringProperty nomeProperty() {
         return this.nome;
     }
 
@@ -39,7 +39,7 @@ public class Usuario {
         this.email.set(email);
     }
     
-    public StringProperty getEmailProperty() {
+    public StringProperty emailProperty() {
         return this.email;
     }
 
@@ -51,7 +51,7 @@ public class Usuario {
         this.senha.set(senha);
     }
     
-    public StringProperty getSenhaProperty() {
+    public StringProperty senhaProperty() {
         return this.senha;
     }
      

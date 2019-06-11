@@ -26,6 +26,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import br.senai.sc.helpdesk.controller.mainSceneWindowController;
 import br.senai.sc.helpdesk.model.Cliente;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javafx.scene.control.TextField;
 
 /**
@@ -56,7 +60,7 @@ public class ClienteSceneWindowController implements Initializable {
             clienteLogado = DAOFactory.getClienteDAO().getClienteByEmail(mainSceneWindowController.emailLogado);
         } catch (SQLException ex) {
             Logger.getLogger(ClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage());
+            alerta.alertaErro(ex.getMessage()).show();
         }
         lblEmailUsuario.setText(clienteLogado.getEmail());
         lblNomeUsuario.setText(clienteLogado.getNome());
@@ -78,14 +82,17 @@ public class ClienteSceneWindowController implements Initializable {
         unBindFields(novoProblema);
         
         try {
-            novoProblema.setCliente(clienteLogado);
+            novoProblema.setCliente(clienteLogado); 
             novoProblema.setDataEnvio(takeActualDate());
-            
+            novoProblema.setNomeCliente(clienteLogado.getNome());
+            novoProblema.setEmailCliente(clienteLogado.getEmail());
             DAOFactory.getProblemaDAO().save(novoProblema);
+            
+            limparFields();
             
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage());
+            alerta.alertaErro(ex.getMessage()).show();
         }
         
     }
@@ -130,9 +137,19 @@ public class ClienteSceneWindowController implements Initializable {
     private Integer takeActualDate(){
 
         Date date = new Date();
-        SimpleDateFormat dataFormat = new SimpleDateFormat();
-        Integer dataNumeric = parseInt(dataFormat.format(date));
-        return dataNumeric;
+        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy/MM/dd");
+        List<String> anoMesDia = Arrays.asList(dataFormat.format(date).split("/"));
+        String dataNumeric = new String() ;
+        for (String value: anoMesDia){
+            dataNumeric = dataNumeric + value;
+        }
+        
+        return parseInt(dataNumeric); 
+    }
+
+    private void limparFields() {
+        txtDescricaoProblema.clear();
+        txtEmpresa.clear();
     }
     
 }

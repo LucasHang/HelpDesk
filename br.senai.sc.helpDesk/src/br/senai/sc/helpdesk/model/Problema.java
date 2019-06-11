@@ -28,13 +28,16 @@ public class Problema {
         
     }
       
-    public Problema(Integer codigo, Integer dataEnvio, String descricao, String empresa, Cliente object){
+    public Problema(Integer codigo, Integer dataEnvio, String descricao, String empresa, Cliente object,String nomeCli,String emailCli){
         
         this.codigo.set(codigo);
         this.dataEnvio.set(dataEnvio);
         this.descricao.set(descricao);
         this.empresa.set(empresa);
         this.requisitante = object;
+        this.nomeCli.set(nomeCli);
+        this.emailCli.set(emailCli);
+        
     }  
     
     
@@ -63,6 +66,10 @@ public class Problema {
     public String getNomeCliente() {
         return this.nomeCli.get();
     }
+    
+    public void setNomeCliente(String value) {
+         this.nomeCli.set(value);
+    }
 
     public StringProperty nomeClienteProperty() {
         return this.nomeCli;
@@ -72,6 +79,10 @@ public class Problema {
         return this.emailCli.get();
     }
 
+     public void setEmailCliente(String value) {
+         this.emailCli.set(value);
+    }
+     
     public StringProperty emailClienteProperty() {
         return this.emailCli;
     }
