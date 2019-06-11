@@ -68,6 +68,8 @@ public class FuncionarioSceneWindowController implements Initializable {
     MeuAlerta alerta;
     ProblemaResolvido problemaSelecionado;
     Funcionario funcionarioLogado;
+    @FXML
+    private Button btnRecarregar;
     
     
     @Override
@@ -82,8 +84,7 @@ public class FuncionarioSceneWindowController implements Initializable {
         }
         
         try {
-            tblProblemasResolvidos.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaResolvidoDAO().
-                    getProblemaResolvidoByEmpresaEArea(funcionarioLogado.getEmpresa(), funcionarioLogado.getArea())));
+            btnRecarregarOnAction(null);
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
             alerta.alertaErro(ex.getMessage()).show();
@@ -114,12 +115,19 @@ public class FuncionarioSceneWindowController implements Initializable {
         
         try {
             DAOFactory.getProblemaResolvidoDAO().update(problemaSelecionado);
+            clearFields();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
             alerta.alertaErro(ex.getMessage()).show();
         }
     }
  
+    
+    @FXML
+    private void btnRecarregarOnAction(ActionEvent event) throws SQLException {
+         tblProblemasResolvidos.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaResolvidoDAO().
+            getProblemaResolvidoByEmpresaEArea(funcionarioLogado.getEmpresa(), funcionarioLogado.getArea())));
+    }
     
     private Boolean verificaFields(){
         Boolean invalido = false;
@@ -146,7 +154,7 @@ public class FuncionarioSceneWindowController implements Initializable {
     
     private void bindFields(ProblemaResolvido problemaResolvido) {
         if (problemaResolvido != null) {
-            txtStatus.textProperty().bindBidirectional(problemaResolvido.tipoProperty());
+            txtStatus.textProperty().bindBidirectional(problemaResolvido.statusProperty());
             txtDescResolucao.textProperty().bindBidirectional(problemaResolvido.descResolucaoProperty());
             txtTecnico.textProperty().bind(problemaResolvido.getTecnico().nomeProperty());
             txtDescricao.textProperty().bind(problemaResolvido.getProblema().descricaoProperty());
@@ -159,14 +167,26 @@ public class FuncionarioSceneWindowController implements Initializable {
 
     private void unbindFields(ProblemaResolvido problemaResolvido) {
         if (problemaResolvido != null) {
-            txtStatus.textProperty().unbindBidirectional(problemaResolvido.tipoProperty());
+            txtStatus.textProperty().unbindBidirectional(problemaResolvido.statusProperty());
             txtDescResolucao.textProperty().unbindBidirectional(problemaResolvido.descResolucaoProperty());
-            problemaResolvido.getTecnico().nomeProperty().unbind();
-            problemaResolvido.getProblema().descricaoProperty().unbind();
-            problemaResolvido.areaProperty().unbind();
-            problemaResolvido.dificuldadeProperty().unbind();
-            problemaResolvido.tipoProperty().unbind();
-            problemaResolvido.urgenciaProperty().unbind();
+            txtTecnico.textProperty().unbind();
+            txtDescricao.textProperty().unbind();
+            txtArea.textProperty().unbind();
+            txtDificuldade.textProperty().unbind();
+            txtTipo.textProperty().unbind();
+            txtUrgencia.textProperty().unbind();
         }
     }
+    
+    private void clearFields(){
+        txtStatus.clear();
+        txtDescResolucao.clear();
+        txtTecnico.clear();
+        txtDescricao.clear();
+        txtArea.clear();
+        txtDificuldade.clear();
+        txtTipo.clear();
+        txtUrgencia.clear();
+    }
+
 }

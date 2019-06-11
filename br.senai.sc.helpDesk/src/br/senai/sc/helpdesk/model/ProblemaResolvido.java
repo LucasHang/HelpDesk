@@ -83,7 +83,7 @@ public class ProblemaResolvido{
         this.status.set(value);
     }
 
-    public StringProperty StatusProperty() {
+    public StringProperty statusProperty() {
         return this.status;
     }
     

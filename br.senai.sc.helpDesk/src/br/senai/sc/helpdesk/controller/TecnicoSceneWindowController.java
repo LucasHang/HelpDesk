@@ -36,14 +36,15 @@ import javafx.util.converter.NumberStringConverter;
  * @author Bratva
  */
 public class TecnicoSceneWindowController implements Initializable {
+    
     @FXML
-    private ComboBox<String> comboTipo;
+    private TextField txtTipo;
     @FXML
-    private ComboBox<String> comboArea;
+    private TextField txtArea;
     @FXML
-    private ComboBox<String> comboDificuldade;
+    private TextField txtDificuldade;
     @FXML
-    private ComboBox<String> comboUrgencia;
+    private TextField txtUrgencia;
     @FXML
     private Button btnEnviar;
     @FXML
@@ -55,28 +56,22 @@ public class TecnicoSceneWindowController implements Initializable {
     @FXML
     private Label lblDescricaoProblema;
     @FXML
-    private TableView<Problema> tableProblemas;
+    private Button btnRecarregar;
+    @FXML
+    private TableView<Problema> tblProblemas;
 
-    
-    List<String> tipos = Arrays.asList("TI", "DBA");
-    List<String> area = Arrays.asList("Financeiro", "Cadastros","Design");
-    List<String> dificuldade = Arrays.asList("Fácil", "Dificil","Meu amigo...");
-    List<String> urgencia = Arrays.asList("Urgente", "Pode esperar");
-    
     MeuAlerta alerta;
     Problema problemaSelecionado;
     ProblemaResolvido novoProblemaResolvido;
     Tecnico tecnicoLogado;
     
+   
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         novoProblemaResolvido = new ProblemaResolvido();
-        
-        comboTipo.setItems(FXCollections.observableArrayList(tipos));
-        comboArea.setItems(FXCollections.observableArrayList(area));
-        comboDificuldade.setItems(FXCollections.observableArrayList(dificuldade));
-        comboUrgencia.setItems(FXCollections.observableArrayList(urgencia));
+ 
         
         try {
             tecnicoLogado = DAOFactory.getTecnicoDAO().getTecnicoByEmail(mainSceneWindowController.emailLogado);
@@ -91,7 +86,7 @@ public class TecnicoSceneWindowController implements Initializable {
         
         
         try {
-            tableProblemas.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaDAO().getAll()));
+            btnRecarregarOnAction(null);
         } catch (SQLException ex) {
             Logger.getLogger(TecnicoSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
             alerta.alertaErro(ex.getMessage()).show();
@@ -99,9 +94,9 @@ public class TecnicoSceneWindowController implements Initializable {
  
         
         
-        tableProblemas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            unbindLabels(oldValue);
-            bindLabels(newValue);
+        tblProblemas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            lblNomeCliente.textProperty().bind(newValue.nomeClienteProperty());
+            lblDescricaoProblema.textProperty().bind(newValue.descricaoProperty());
             problemaSelecionado = newValue;
         });
         
@@ -115,11 +110,11 @@ public class TecnicoSceneWindowController implements Initializable {
             return;
         }
         
-        comboTipo.getStyleClass().remove("invalido");
-        comboArea.getStyleClass().remove("invalido");
-        comboDificuldade.getStyleClass().remove("invalido");
-        comboUrgencia.getStyleClass().remove("invalido");
-        tableProblemas.getStyleClass().remove("invalido");
+        txtTipo.getStyleClass().remove("invalido");
+        txtArea.getStyleClass().remove("invalido");
+        txtDificuldade.getStyleClass().remove("invalido");
+        txtUrgencia.getStyleClass().remove("invalido");
+        tblProblemas.getStyleClass().remove("invalido");
         
         unbindFields(novoProblemaResolvido);
         
@@ -127,6 +122,7 @@ public class TecnicoSceneWindowController implements Initializable {
             novoProblemaResolvido.setProblema(problemaSelecionado);
             novoProblemaResolvido.setTecnico(tecnicoLogado);
             DAOFactory.getProblemaResolvidoDAO().save(novoProblemaResolvido);
+            clearFields();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
             alerta.alertaErro(ex.getMessage()).show();
@@ -134,45 +130,51 @@ public class TecnicoSceneWindowController implements Initializable {
         
     }
     
+     @FXML
+    private void btnRecarregarOnAction(ActionEvent event) throws SQLException {
+        tblProblemas.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaDAO().getAll()));
+    }
+    
+    
     private Boolean verificaFields(){
         Boolean invalido = false;
         
-        if(comboTipo.accessibleTextProperty().isNull().get()){
-            comboTipo.getStyleClass().add("invalido");
+        if(txtTipo.textProperty().isNull().get()){
+            txtTipo.getStyleClass().add("invalido");
             invalido = true;
             
         }else{
-            comboTipo.getStyleClass().remove("invalido");
+            txtTipo.getStyleClass().remove("invalido");
         }
         
-        if(comboArea.accessibleTextProperty().isNull().get()){
-            comboArea.getStyleClass().add("invalido");
+        if(txtArea.textProperty().isNull().get()){
+            txtArea.getStyleClass().add("invalido");
             invalido = true;
             
         }else{
-            comboArea.getStyleClass().remove("invalido");
+            txtArea.getStyleClass().remove("invalido");
         }
         
-        if(comboDificuldade.accessibleTextProperty().isNull().get()){
-            comboDificuldade.getStyleClass().add("invalido");
+        if(txtDificuldade.textProperty().isNull().get()){
+            txtDificuldade.getStyleClass().add("invalido");
             invalido = true;
             
         }else{
-            comboDificuldade.getStyleClass().remove("invalido");
+            txtDificuldade.getStyleClass().remove("invalido");
         }
         
-        if(comboUrgencia.accessibleTextProperty().isNull().get()){
-            comboUrgencia.getStyleClass().add("invalido");
+        if(txtUrgencia.textProperty().isNull().get()){
+            txtUrgencia.getStyleClass().add("invalido");
             invalido = true;
             
         }else{
-            comboUrgencia.getStyleClass().remove("invalido");
+            txtUrgencia.getStyleClass().remove("invalido");
         }
         
         if(problemaSelecionado == null){
-            tableProblemas.getStyleClass().add("invalido");
+            tblProblemas.getStyleClass().add("invalido");
         }else{
-            tableProblemas.getStyleClass().remove("invalido");
+            tblProblemas.getStyleClass().remove("invalido");
         }
         
         return invalido;
@@ -180,29 +182,28 @@ public class TecnicoSceneWindowController implements Initializable {
     
     private void bindFields(ProblemaResolvido problemaResolvido) {
         if (problemaResolvido != null) {
-            comboTipo.accessibleTextProperty().bindBidirectional(problemaResolvido.tipoProperty());
-            comboArea.accessibleTextProperty().bindBidirectional(problemaResolvido.areaProperty());
-            comboDificuldade.accessibleTextProperty().bindBidirectional(problemaResolvido.dificuldadeProperty());
-            comboUrgencia.accessibleTextProperty().bindBidirectional(problemaResolvido.urgenciaProperty());
+            txtTipo.textProperty().bindBidirectional(problemaResolvido.tipoProperty());
+            txtArea.textProperty().bindBidirectional(problemaResolvido.areaProperty());
+            txtDificuldade.textProperty().bindBidirectional(problemaResolvido.dificuldadeProperty());
+            txtUrgencia.textProperty().bindBidirectional(problemaResolvido.urgenciaProperty());
         }
     }
 
     private void unbindFields(ProblemaResolvido problemaResolvido) {
         if (problemaResolvido != null) {
-            comboTipo.accessibleTextProperty().unbindBidirectional(problemaResolvido.tipoProperty());
-            comboArea.accessibleTextProperty().unbindBidirectional(problemaResolvido.areaProperty());
-            comboDificuldade.accessibleTextProperty().unbindBidirectional(problemaResolvido.dificuldadeProperty());
-            comboUrgencia.accessibleTextProperty().unbindBidirectional(problemaResolvido.urgenciaProperty());
+            txtTipo.textProperty().unbindBidirectional(problemaResolvido.tipoProperty());
+            txtArea.textProperty().unbindBidirectional(problemaResolvido.areaProperty());
+            txtDificuldade.textProperty().unbindBidirectional(problemaResolvido.dificuldadeProperty());
+            txtUrgencia.textProperty().unbindBidirectional(problemaResolvido.urgenciaProperty());
         }
     }
-    
-    private void bindLabels(Problema problemaSelecionado){
-        lblNomeCliente.textProperty().bind(problemaSelecionado.getCliente().nomeProperty());
-        lblDescricaoProblema.textProperty().bind(problemaSelecionado.descricaoProperty());
+
+    private void clearFields() {
+        txtTipo.clear();
+        txtArea.clear();
+        txtDificuldade.clear();
+        txtUrgencia.clear();
     }
     
-    private void unbindLabels(Problema problemaSelecionado){
-        problemaSelecionado.getCliente().nomeProperty().unbind();
-        problemaSelecionado.descricaoProperty().unbind();
-    }
+   
 }

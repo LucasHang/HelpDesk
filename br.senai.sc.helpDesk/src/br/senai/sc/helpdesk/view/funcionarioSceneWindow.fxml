@@ -17,7 +17,7 @@
          <children>
             <Label fx:id="lblNomeUsuario" layoutX="28.0" layoutY="30.0" text="Nome Usuário" />
             <Label fx:id="lblEmailUsuario" layoutX="28.0" layoutY="73.0" text="Nome Email" />
-            <TableView fx:id="tblProblemasResolvidos" layoutX="252.0" layoutY="439.0" prefHeight="233.0" prefWidth="748.0">
+            <TableView fx:id="tblProblemasResolvidos" layoutX="252.0" layoutY="439.0" prefHeight="233.0" prefWidth="748.0" styleClass="comboBox">
               <columns>
                 <TableColumn prefWidth="75.0" text="Status">
                     <cellValueFactory>
@@ -75,6 +75,11 @@
             <TextField fx:id="txtDificuldade" editable="false" layoutX="637.0" layoutY="189.0" />
             <TextField fx:id="txtUrgencia" editable="false" layoutX="794.0" layoutY="188.0" />
             <TextField fx:id="txtStatus" layoutX="487.0" layoutY="392.0" styleClass="textfield" />
+            <Button fx:id="btnRecarregar" layoutX="903.0" layoutY="406.0" mnemonicParsing="false" onAction="#btnRecarregarOnAction" prefHeight="39.0" prefWidth="97.0" text="Recarregar">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

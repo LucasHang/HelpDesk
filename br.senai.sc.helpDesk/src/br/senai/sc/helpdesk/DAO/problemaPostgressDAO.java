@@ -80,9 +80,7 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -102,9 +100,7 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -124,9 +120,7 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -146,9 +140,7 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigo")),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigo"))));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -168,9 +160,7 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getNome(),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")).getEmail()));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
         }
         resultSetRows.close();
         super.closePreparedStatement();

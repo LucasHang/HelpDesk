@@ -146,9 +146,9 @@ public class problemaResolvidoPostgressDAO extends ConnectionFactory implements 
     @Override
     public List<ProblemaResolvido> getProblemaResolvidoByEmpresaEArea(String empresa, String area) throws SQLException {
         List<ProblemaResolvido>  rows = new ArrayList<>();
-        super.preparedStatementInitialize("select * from problema a, problemaResolvido b where a.codigo = b.codigoPro and upper(a.empresa) like ? and b.area like ?");
+        super.preparedStatementInitialize("select * from problema a, problemaResolvido b where a.codigo = b.codigoPro and upper(a.empresa) like ? and upper(b.area) like ?");
         super.prepared.setString(1, empresa.toUpperCase());
-        super.prepared.setString(2, area);
+        super.prepared.setString(2, area.toUpperCase());
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {

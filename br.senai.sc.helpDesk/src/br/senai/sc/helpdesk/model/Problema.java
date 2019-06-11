@@ -18,25 +18,28 @@ public class Problema {
     
     private final IntegerProperty codigo = new SimpleIntegerProperty();
     private Cliente requisitante = null;
-    private final StringProperty nomeCli = new SimpleStringProperty();
-    private final StringProperty emailCli = new SimpleStringProperty();
+
     private final IntegerProperty dataEnvio = new SimpleIntegerProperty();
     private final StringProperty descricao = new SimpleStringProperty();
     private final StringProperty empresa = new SimpleStringProperty();
 
+    
+    private final StringProperty nomeCli = new SimpleStringProperty();
+    private final StringProperty emailCli = new SimpleStringProperty();
+    
     public Problema(){
         
     }
       
-    public Problema(Integer codigo, Integer dataEnvio, String descricao, String empresa, Cliente object,String nomeCli,String emailCli){
+    public Problema(Integer codigo, Integer dataEnvio, String descricao, String empresa, Cliente object){
         
         this.codigo.set(codigo);
         this.dataEnvio.set(dataEnvio);
         this.descricao.set(descricao);
         this.empresa.set(empresa);
         this.requisitante = object;
-        this.nomeCli.set(nomeCli);
-        this.emailCli.set(emailCli);
+        this.nomeCli.set(object.getNome());
+        this.emailCli.set(object.getEmail());
         
     }  
     
