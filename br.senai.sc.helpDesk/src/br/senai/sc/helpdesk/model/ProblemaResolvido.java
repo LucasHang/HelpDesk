@@ -18,16 +18,21 @@ public class ProblemaResolvido{
     
     private final IntegerProperty codigo = new SimpleIntegerProperty();
     private final StringProperty status = new SimpleStringProperty("Pendente");
-    private Problema problema = null;
-    private Tecnico requerente = null;
+    private Problema problema;
+    private Tecnico requerente;
+    private Funcionario funcionario = new Funcionario();
     private final StringProperty tipo = new SimpleStringProperty();
     private final StringProperty area = new SimpleStringProperty();
     private final StringProperty dificuldade = new SimpleStringProperty();
     private final StringProperty urgencia = new SimpleStringProperty();
-    private final StringProperty descResolucao = new SimpleStringProperty();
+    private final StringProperty descResolucao = new SimpleStringProperty("Pendente");
     
     private final StringProperty nomeTec = new SimpleStringProperty();
     private final IntegerProperty dataEnvioPro = new SimpleIntegerProperty();
+    private final StringProperty nomeFunc = new SimpleStringProperty("Pendente");
+
+    
+    
 
     
     public ProblemaResolvido(){
@@ -35,7 +40,7 @@ public class ProblemaResolvido{
     }
       
     public ProblemaResolvido(Integer codigo, String tipo, String area, String dificuldade,
-            String urgencia,String descricao,String status, Tecnico objectTec,Problema objectPro){
+            String urgencia,String descricao,String status, Tecnico objectTec,Problema objectPro,Funcionario objectFunc){
         
         this.codigo.set(codigo);
         this.tipo.set(tipo);
@@ -48,6 +53,8 @@ public class ProblemaResolvido{
         this.dataEnvioPro.set(objectPro.getDataEnvio());
         this.descResolucao.set(descricao);
         this.status.set(status);
+        this.funcionario = objectFunc;
+        this.nomeFunc.set(objectFunc.getNome());
     }  
     
     public String getDescResolucao() {
@@ -96,6 +103,27 @@ public class ProblemaResolvido{
         this.dataEnvioPro.set(object.getDataEnvio());
     }
     
+    public Funcionario getFuncionario() {
+        return this.funcionario;
+    }
+
+    public void setFuncionario(Funcionario object) {
+        this.funcionario = object;
+        this.nomeFunc.set(object.getNome());
+    }
+    
+    public String getNomeFunc() {
+        return this.nomeFunc.get();
+    }
+
+    public void setNomeFunc(String value) {
+        this.nomeFunc.set(value);
+    }
+
+    public StringProperty nomeFuncProperty() {
+        return this.nomeFunc;
+    }
+    
      public Integer getDataEnvioPro() {
         return this.dataEnvioPro.get();
     }
@@ -115,11 +143,11 @@ public class ProblemaResolvido{
     }
     
     public String getNomeTec() {
-        return nomeTec.get();
+        return this.nomeTec.get();
     }
 
     public StringProperty nomeTecProperty() {
-        return nomeTec;
+        return this.nomeTec;
     }
     
     

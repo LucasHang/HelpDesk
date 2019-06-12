@@ -68,11 +68,11 @@ public class CadastroClienteSceneWindowController implements Initializable {
                 BrSenaiScHelpDesk.mudarTela("login");
             } catch (IOException ex) {
                 Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                alerta.alertaErro(ex.getMessage()).show();
+                alerta.alertaErro(ex.getMessage()).showAndWait();
             }
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage()).show();
+            alerta.alertaErro(ex.getMessage()).showAndWait();
         }
     }
     

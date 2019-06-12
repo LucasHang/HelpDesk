@@ -61,7 +61,7 @@ public class mainSceneWindowController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+       
     }    
  
     @FXML
@@ -76,7 +76,7 @@ public class mainSceneWindowController implements Initializable {
                         BrSenaiScHelpDesk.mudarTela("tecnico");
                     } catch (IOException ex) {
                         Logger.getLogger(mainSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                        alerta.alertaErro(ex.getMessage()).show();
+                        alerta.alertaErro(ex.getMessage()).showAndWait();
                     }
                 }else{
                     if(radioFuncionario.isSelected()){
@@ -84,14 +84,14 @@ public class mainSceneWindowController implements Initializable {
                             BrSenaiScHelpDesk.mudarTela("funcionario");
                         } catch (IOException ex) {
                             Logger.getLogger(mainSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                            alerta.alertaErro(ex.getMessage()).show();
+                            alerta.alertaErro(ex.getMessage()).showAndWait();
                         }
                     }else{
                         try {
                             BrSenaiScHelpDesk.mudarTela("cliente");
                         } catch (IOException ex) {
                             Logger.getLogger(mainSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                            alerta.alertaErro(ex.getMessage()).show();
+                            alerta.alertaErro(ex.getMessage()).showAndWait();
                         }
                     }
                 }
@@ -110,7 +110,7 @@ public class mainSceneWindowController implements Initializable {
             BrSenaiScHelpDesk.mudarTela("cadastroCliente");
         } catch (IOException ex) {
             Logger.getLogger(mainSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage()).show();
+            alerta.alertaErro(ex.getMessage()).showAndWait();
         }
     }
     

@@ -111,5 +111,26 @@ public class funcionarioPostgressDAO extends ConnectionFactory implements funcio
 
         return funcionario;
     }
+
+    @Override
+    public Funcionario getFuncionarioByCodigo(Integer codigo) throws SQLException {
+        Funcionario funcionario = null;
+        super.preparedStatementInitialize("select * from funcionario where codigo = ?");
+        super.prepared.setInt(1,codigo);
+        super.prepared.execute();
+        ResultSet resultSetRows = super.prepared.getResultSet();
+        if (resultSetRows.next()) {
+            funcionario = (new Funcionario(resultSetRows.getInt("codigo"),
+                    resultSetRows.getString("nome"),
+                    resultSetRows.getString("senha"),
+                    resultSetRows.getString("email"),
+                    resultSetRows.getString("empresa"),
+                    resultSetRows.getString("area")));
+        }
+        resultSetRows.close();
+        super.closePreparedStatement();
+
+        return funcionario;
+    }
     
 }

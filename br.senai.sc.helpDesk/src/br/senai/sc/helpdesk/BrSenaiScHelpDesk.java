@@ -35,6 +35,7 @@ public class BrSenaiScHelpDesk extends Application {
     public void start(Stage stage) throws Exception {
         
         TheStage = stage;
+        TheStage.setResizable(false);
         
         Parent root = FXMLLoader.load(getClass().getResource("view/mainSceneWindow.fxml"));
         
@@ -57,7 +58,7 @@ public class BrSenaiScHelpDesk extends Application {
                 break;
             case "cliente":
                 Parent fxmlCliente = FXMLLoader.load(BrSenaiScHelpDesk.class.getResource("view/clienteSceneWindow.fxml"));
-                cliente = new Scene(fxmlCliente, 800, 600);
+                cliente = new Scene(fxmlCliente, 1280, 720);
                 TheStage.close();
                 TheStage.setScene(cliente);
                 TheStage.show();

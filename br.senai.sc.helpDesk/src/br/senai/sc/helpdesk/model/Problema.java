@@ -66,27 +66,27 @@ public class Problema {
         this.emailCli.set(object.getEmail());
     }
     
-    public String getNomeCliente() {
+    public String getNomeCli() {
         return this.nomeCli.get();
     }
     
-    public void setNomeCliente(String value) {
+    public void setNomeCli(String value) {
          this.nomeCli.set(value);
     }
 
-    public StringProperty nomeClienteProperty() {
+    public StringProperty nomeCliProperty() {
         return this.nomeCli;
     }
     
-     public String getEmailCliente() {
+     public String getEmailCli() {
         return this.emailCli.get();
     }
 
-     public void setEmailCliente(String value) {
+     public void setEmailCli(String value) {
          this.emailCli.set(value);
     }
      
-    public StringProperty emailClienteProperty() {
+    public StringProperty emailCliProperty() {
         return this.emailCli;
     }
     

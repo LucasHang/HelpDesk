@@ -29,7 +29,7 @@
                         <PropertyValueFactory property="nomeTec" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn prefWidth="89.0" text="Data&#10;Envio">
+                <TableColumn fx:id="tblColumnData" prefWidth="89.0" text="Data&#10;Envio">
                   <cellValueFactory>
                     <PropertyValueFactory property="dataEnvioPro" />
                   </cellValueFactory>
@@ -57,6 +57,7 @@
               </columns>
             </TableView>
             <TextArea fx:id="txtDescResolucao" layoutX="269.0" layoutY="240.0" prefHeight="138.0" prefWidth="714.0" promptText="Descreva a resolução do problema" />
+            <TextField fx:id="txtStatus" layoutX="487.0" layoutY="392.0" styleClass="textfield" />
             <Label alignment="CENTER" layoutX="348.0" layoutY="53.0" prefHeight="26.0" prefWidth="71.0" text="Técnico" />
             <Label layoutX="701.0" layoutY="19.0" text="Descrição" />
             <Label layoutX="366.0" layoutY="160.0" text="Tipo" />
@@ -74,7 +75,6 @@
             <TextField fx:id="txtArea" editable="false" layoutX="475.0" layoutY="190.0" />
             <TextField fx:id="txtDificuldade" editable="false" layoutX="637.0" layoutY="189.0" />
             <TextField fx:id="txtUrgencia" editable="false" layoutX="794.0" layoutY="188.0" />
-            <TextField fx:id="txtStatus" layoutX="487.0" layoutY="392.0" styleClass="textfield" />
             <Button fx:id="btnRecarregar" layoutX="903.0" layoutY="406.0" mnemonicParsing="false" onAction="#btnRecarregarOnAction" prefHeight="39.0" prefWidth="97.0" text="Recarregar">
                <font>
                   <Font name="System Bold" size="14.0" />

@@ -20,9 +20,9 @@
             <Label layoutX="169.0" layoutY="96.0" text="Nome completo:" />
             <Label layoutX="256.0" layoutY="166.0" text="Email:" />
             <Label layoutX="364.0" layoutY="240.0" text="Senha:" />
-            <PasswordField fx:id="txtSenha" layoutX="430.0" layoutY="239.0" prefHeight="27.0" prefWidth="171.0" styleClass="textfield" />
             <TextField fx:id="txtNome" layoutX="315.0" layoutY="97.0" prefHeight="25.0" prefWidth="286.0" styleClass="textfield" />
             <TextField fx:id="txtEmail" layoutX="315.0" layoutY="165.0" prefHeight="27.0" prefWidth="286.0" styleClass="textfield" />
+            <PasswordField fx:id="txtSenha" layoutX="430.0" layoutY="239.0" prefHeight="27.0" prefWidth="171.0" styleClass="textfield" />
             <PasswordField fx:id="txtSenhaDeNovo" layoutX="430.0" layoutY="305.0" prefHeight="25.0" prefWidth="171.0" styleClass="textfield" />
             <Label layoutX="296.0" layoutY="306.0" text="Repita a senha:" />
          </children>

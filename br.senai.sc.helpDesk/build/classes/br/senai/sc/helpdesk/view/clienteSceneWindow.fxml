@@ -2,27 +2,70 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.ClienteSceneWindowController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@stylesClass.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.ClienteSceneWindowController">
    <children>
-      <Pane layoutX="14.0" layoutY="14.0" prefHeight="571.0" prefWidth="775.0" styleClass="pane" stylesheets="@stylesClass.css">
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="690.0" prefWidth="640.0" styleClass="pane" stylesheets="@stylesClass.css">
          <children>
-            <TextArea fx:id="txtDescricaoProblema" layoutX="75.0" layoutY="167.0" prefHeight="200.0" prefWidth="625.0" styleClass="textfield" />
-            <Button fx:id="btnEnviarProblema" layoutX="555.0" layoutY="469.0" mnemonicParsing="false" onAction="#btnEnviarProblemaOnAction" prefHeight="40.0" prefWidth="145.0" text="Enviar">
+            <TextArea fx:id="txtDescricaoProblema" layoutX="60.0" layoutY="232.0" prefHeight="175.0" prefWidth="520.0" styleClass="textfield" />
+            <Button fx:id="btnEnviarProblema" layoutX="61.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnEnviarProblemaOnAction" prefHeight="40.0" prefWidth="145.0" text="Enviar">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Label layoutX="75.0" layoutY="105.0" styleClass="label2" text="Descreva o problema:" />
-            <Label fx:id="lblNomeUsuario" layoutX="585.0" layoutY="50.0" text="Nome Usuario" />
-            <Label fx:id="lblEmailUsuario" layoutX="587.0" layoutY="92.0" text="Email Usuario" />
-            <TextField fx:id="txtEmpresa" layoutX="380.0" layoutY="397.0" prefHeight="32.0" prefWidth="316.0" promptText="EX:. SoftPlan" />
-            <Label layoutX="75.0" layoutY="400.0" text="Empresa desenvolvedora do sistema:" />
+            <Label layoutX="60.0" layoutY="162.0" styleClass="label2" text="Descreva o problema:" />
+            <Label fx:id="lblNomeUsuario" layoutX="480.0" layoutY="50.0" text="Nome Usuario" />
+            <Label fx:id="lblEmailUsuario" layoutX="482.0" layoutY="92.0" text="Email Usuario" />
+            <TextField fx:id="txtEmpresa" layoutX="351.0" layoutY="457.0" prefHeight="32.0" prefWidth="243.0" promptText="EX:. SoftPlan" />
+            <Label layoutX="46.0" layoutY="460.0" text="Empresa desenvolvedora do sistema:" />
+         </children>
+      </Pane>
+      <Pane layoutX="665.0" layoutY="14.0" prefHeight="690.0" prefWidth="600.0" styleClass="pane">
+         <children>
+            <TableView fx:id="tblProblemasResolvidos" layoutX="24.0" layoutY="345.0" prefHeight="329.0" prefWidth="557.0" styleClass="comboBox">
+              <columns>
+                <TableColumn prefWidth="75.0" text="Status">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="status" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="tblColumnData" prefWidth="131.0" text="Data&#10;Envio&#10;">
+                <cellValueFactory>
+                        <PropertyValueFactory property="dataEnvioPro" />
+                    </cellValueFactory>
+                </TableColumn>
+                  <TableColumn prefWidth="92.0" text="Técnico">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="nomeTec" />
+                    </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn prefWidth="108.0" text="Funcionário">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="nomeFunc" />
+                    </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn prefWidth="150.0" text="Resolução">
+                      <cellValueFactory>
+                        <PropertyValueFactory property="descResolucao" />
+                    </cellValueFactory>
+                  </TableColumn>
+              </columns>
+            </TableView>
+            <Label fx:id="lblNomeFuncionario" alignment="CENTER" layoutX="106.0" layoutY="28.0" prefHeight="26.0" prefWidth="401.0" text="Nome Funcionário" />
+            <Label fx:id="lblDescResolucao" alignment="CENTER" layoutX="28.0" layoutY="122.0" prefHeight="181.0" prefWidth="557.0" text="Descrição" />
+            <Button fx:id="btnCarregar" layoutX="482.0" layoutY="313.0" mnemonicParsing="false" onAction="#btnCarregarOnAction" prefHeight="40.0" prefWidth="99.0" text="Recarregar">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
          </children>
       </Pane>
    </children>

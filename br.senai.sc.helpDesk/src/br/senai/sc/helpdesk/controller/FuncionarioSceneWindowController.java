@@ -25,6 +25,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -63,13 +65,15 @@ public class FuncionarioSceneWindowController implements Initializable {
     private Button btnRelatar;
     @FXML
     private TextField txtStatus;
-    
+    @FXML
+    private TableColumn<ProblemaResolvido, Integer> tblColumnData;
    
     MeuAlerta alerta;
     ProblemaResolvido problemaSelecionado;
     Funcionario funcionarioLogado;
     @FXML
     private Button btnRecarregar;
+    
     
     
     @Override
@@ -80,18 +84,63 @@ public class FuncionarioSceneWindowController implements Initializable {
             funcionarioLogado = DAOFactory.getFuncionarioDAO().getFuncionarioByEmail(mainSceneWindowController.emailLogado);
         } catch (SQLException ex) {
             Logger.getLogger(TecnicoSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage()).show();
+            alerta.alertaErro(ex.getMessage()).showAndWait();
         }
+        
+        lblNomeUsuario.setText(funcionarioLogado.getNome());
+        lblEmailUsuario.setText(funcionarioLogado.getEmail());
         
         try {
             btnRecarregarOnAction(null);
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage()).show();
+            alerta.alertaErro(ex.getMessage()).showAndWait();
         }
                 
-        lblNomeUsuario.setText(funcionarioLogado.getNome());
-        lblEmailUsuario.setText(funcionarioLogado.getEmail());
+        tblColumnData.setCellFactory((TableColumn<ProblemaResolvido, Integer> param) -> {
+            TableCell cell = new TableCell<ProblemaResolvido, Integer>() {
+
+                @Override
+                public void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(null);
+                    setGraphic(null);
+                    if (!empty) {
+                        if (item == null || item == 0) {
+                            setText("");
+                        } else {
+                            String dataString = "";
+                            List<String> aux = Arrays.asList(item.toString().split(""));
+                            for (String num: aux.subList(6, 8)){
+                            dataString +=  num;
+                            }
+                            dataString += "/";
+                            for (String num: aux.subList(4, 6)){
+                            dataString +=  num;
+                            }
+                            dataString += "/";
+                            for (String num: aux.subList(0, 4)){
+                            dataString +=  num;
+                            }
+                            setText(dataString);
+                        }
+
+                    }
+                }
+
+                @Override
+                public void updateSelected(boolean upd) {
+                    super.updateSelected(upd);
+                }
+
+                private String getString() {
+                    return getItem() == null ? "" : getItem().toString();
+                }
+            };
+            return cell;
+        });
+        
+        
         
         
         tblProblemasResolvidos.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -114,11 +163,12 @@ public class FuncionarioSceneWindowController implements Initializable {
         unbindFields(problemaSelecionado);
         
         try {
+            problemaSelecionado.setFuncionario(funcionarioLogado);
             DAOFactory.getProblemaResolvidoDAO().update(problemaSelecionado);
             clearFields();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage()).show();
+            alerta.alertaErro(ex.getMessage()).showAndWait();
         }
     }
  

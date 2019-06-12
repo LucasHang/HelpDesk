@@ -28,6 +28,8 @@ import br.senai.sc.helpdesk.model.ProblemaResolvido;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -36,7 +38,7 @@ import javafx.util.converter.NumberStringConverter;
  * @author Bratva
  */
 public class TecnicoSceneWindowController implements Initializable {
-    
+
     @FXML
     private TextField txtTipo;
     @FXML
@@ -59,65 +61,107 @@ public class TecnicoSceneWindowController implements Initializable {
     private Button btnRecarregar;
     @FXML
     private TableView<Problema> tblProblemas;
+    @FXML
+    private TableColumn<Problema, Integer> tblColumnData;
 
     MeuAlerta alerta;
     Problema problemaSelecionado;
     ProblemaResolvido novoProblemaResolvido;
     Tecnico tecnicoLogado;
-    
-   
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         novoProblemaResolvido = new ProblemaResolvido();
- 
-        
+
         try {
             tecnicoLogado = DAOFactory.getTecnicoDAO().getTecnicoByEmail(mainSceneWindowController.emailLogado);
         } catch (SQLException ex) {
             Logger.getLogger(TecnicoSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage()).show();
+            alerta.alertaErro(ex.getMessage()).showAndWait();
         }
-        
+
         lblNomeUsuario.setText(tecnicoLogado.getNome());
         lblEmailUsuario.setText(tecnicoLogado.getEmail());
-        
-        
-        
+
         try {
             btnRecarregarOnAction(null);
         } catch (SQLException ex) {
             Logger.getLogger(TecnicoSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            alerta.alertaErro(ex.getMessage()).show();
+            alerta.alertaErro(ex.getMessage()).showAndWait();
         }
- 
-        
-        
+
+                
+        tblColumnData.setCellFactory((TableColumn<Problema, Integer> param) -> {
+            TableCell cell = new TableCell<Problema, Integer>() {
+
+                @Override
+                public void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(null);
+                    setGraphic(null);
+                    if (!empty) {
+                        if (item == null || item == 0) {
+                            setText("");
+                        } else {
+                            String dataString = "";
+                            List<String> aux = Arrays.asList(item.toString().split(""));
+                            for (String num: aux.subList(6, 8)){
+                            dataString +=  num;
+                            }
+                            dataString += "/";
+                            for (String num: aux.subList(4, 6)){
+                            dataString +=  num;
+                            }
+                            dataString += "/";
+                            for (String num: aux.subList(0, 4)){
+                            dataString +=  num;
+                            }
+                            setText(dataString);
+                        }
+
+                    }
+                }
+
+                @Override
+                public void updateSelected(boolean upd) {
+                    super.updateSelected(upd);
+                }
+
+                private String getString() {
+                    return getItem() == null ? "" : getItem().toString();
+                }
+            };
+            return cell;
+        });
+
         tblProblemas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            lblNomeCliente.textProperty().bind(newValue.nomeClienteProperty());
+            lblNomeCliente.textProperty().unbind();
+            lblDescricaoProblema.textProperty().unbind();
+            
+            lblNomeCliente.textProperty().bind(newValue.nomeCliProperty());
             lblDescricaoProblema.textProperty().bind(newValue.descricaoProperty());
             problemaSelecionado = newValue;
         });
-        
+
         bindFields(novoProblemaResolvido);
-    }    
+    }
 
     @FXML
+
     private void btnEnviarOnAction(ActionEvent event) {
-        
-        if(verificaFields()){
+
+        if (verificaFields()) {
             return;
         }
-        
+
         txtTipo.getStyleClass().remove("invalido");
         txtArea.getStyleClass().remove("invalido");
         txtDificuldade.getStyleClass().remove("invalido");
         txtUrgencia.getStyleClass().remove("invalido");
         tblProblemas.getStyleClass().remove("invalido");
-        
+
         unbindFields(novoProblemaResolvido);
-        
+
         try {
             novoProblemaResolvido.setProblema(problemaSelecionado);
             novoProblemaResolvido.setTecnico(tecnicoLogado);
@@ -127,59 +171,58 @@ public class TecnicoSceneWindowController implements Initializable {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
             alerta.alertaErro(ex.getMessage()).show();
         }
-        
+
     }
-    
-     @FXML
+
+    @FXML
     private void btnRecarregarOnAction(ActionEvent event) throws SQLException {
         tblProblemas.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaDAO().getAll()));
     }
-    
-    
-    private Boolean verificaFields(){
+
+    private Boolean verificaFields() {
         Boolean invalido = false;
-        
-        if(txtTipo.textProperty().isNull().get()){
+
+        if (txtTipo.textProperty().isNull().get()) {
             txtTipo.getStyleClass().add("invalido");
             invalido = true;
-            
-        }else{
+
+        } else {
             txtTipo.getStyleClass().remove("invalido");
         }
-        
-        if(txtArea.textProperty().isNull().get()){
+
+        if (txtArea.textProperty().isNull().get()) {
             txtArea.getStyleClass().add("invalido");
             invalido = true;
-            
-        }else{
+
+        } else {
             txtArea.getStyleClass().remove("invalido");
         }
-        
-        if(txtDificuldade.textProperty().isNull().get()){
+
+        if (txtDificuldade.textProperty().isNull().get()) {
             txtDificuldade.getStyleClass().add("invalido");
             invalido = true;
-            
-        }else{
+
+        } else {
             txtDificuldade.getStyleClass().remove("invalido");
         }
-        
-        if(txtUrgencia.textProperty().isNull().get()){
+
+        if (txtUrgencia.textProperty().isNull().get()) {
             txtUrgencia.getStyleClass().add("invalido");
             invalido = true;
-            
-        }else{
+
+        } else {
             txtUrgencia.getStyleClass().remove("invalido");
         }
-        
-        if(problemaSelecionado == null){
+
+        if (problemaSelecionado == null) {
             tblProblemas.getStyleClass().add("invalido");
-        }else{
+        } else {
             tblProblemas.getStyleClass().remove("invalido");
         }
-        
+
         return invalido;
     }
-    
+
     private void bindFields(ProblemaResolvido problemaResolvido) {
         if (problemaResolvido != null) {
             txtTipo.textProperty().bindBidirectional(problemaResolvido.tipoProperty());
@@ -204,6 +247,5 @@ public class TecnicoSceneWindowController implements Initializable {
         txtDificuldade.clear();
         txtUrgencia.clear();
     }
-    
-   
+
 }
