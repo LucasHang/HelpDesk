@@ -44,7 +44,7 @@ public class ConnectionFactory {
     }
     
     private Connection getConnetionPostgres() throws SQLException{
-       return getConnetion("jdbc:postgresql://localhost/lucas", "postgres", "lucas");
+       return getConnetion("jdbc:postgresql://localhost/helpdesk", "postgres", "senai");
     }
     
     protected void preparedStatementInitialize(String sql) throws SQLException{

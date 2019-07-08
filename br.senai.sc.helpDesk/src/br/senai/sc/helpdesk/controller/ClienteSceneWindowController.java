@@ -32,10 +32,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javafx.collections.FXCollections;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 /**
  * FXML Controller class
@@ -68,9 +70,18 @@ public class ClienteSceneWindowController implements Initializable {
     Cliente clienteLogado;
     MeuAlerta alerta;
     Problema novoProblema;
+    @FXML
+    private RadioButton radioBaixa;
+    @FXML
+    private ToggleGroup prioridade;
+    @FXML
+    private RadioButton radioMedia;
+    @FXML
+    private RadioButton radioAlta;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+         
         try {
             clienteLogado = DAOFactory.getClienteDAO().getClienteByEmail(mainSceneWindowController.emailLogado);
         } catch (SQLException ex) {
@@ -158,6 +169,9 @@ public class ClienteSceneWindowController implements Initializable {
 
         txtDescricaoProblema.getStyleClass().remove("invalido");
         txtEmpresa.getStyleClass().remove("invalido");
+        radioAlta.getStyleClass().remove("invalido");
+        radioMedia.getStyleClass().remove("invalido");
+        radioBaixa.getStyleClass().remove("invalido");
 
         unBindFields(novoProblema);
 
@@ -166,8 +180,9 @@ public class ClienteSceneWindowController implements Initializable {
             novoProblema.setDataEnvio(takeActualDate());
             novoProblema.setNomeCli(clienteLogado.getNome());
             novoProblema.setEmailCli(clienteLogado.getEmail());
+            novoProblema.setUrgencia(getRadioSelecionado());
+            novoProblema.setVerificado(false);
             DAOFactory.getProblemaDAO().save(novoProblema);
-
             limparFields();
 
         } catch (SQLException ex) {
@@ -179,9 +194,25 @@ public class ClienteSceneWindowController implements Initializable {
 
     @FXML
     private void btnCarregarOnAction(ActionEvent event) throws SQLException {
+        
         tblProblemasResolvidos.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaResolvidoDAO().getProblemaResolvidoByCliente(clienteLogado.getEmail())));
     }
 
+    private String getRadioSelecionado(){
+        if(radioBaixa.isSelected() || radioMedia.isSelected() || radioAlta.isSelected()){
+            if(radioBaixa.isSelected()){
+                return "Adaptativa";
+            }
+            if(radioMedia.isSelected()){
+                return "Evolutiva";
+            }
+            if(radioAlta.isSelected()){
+                return "Corretiva";
+            }
+        }
+        return null;
+    }
+    
     private Boolean verificaFields() {
         Boolean invalido = false;
 
@@ -199,6 +230,16 @@ public class ClienteSceneWindowController implements Initializable {
 
         } else {
             txtEmpresa.getStyleClass().remove("invalido");
+        }
+        
+        if(!(radioAlta.isSelected() || radioBaixa.isSelected() || radioMedia.isSelected())){
+            radioAlta.getStyleClass().add("invalido");
+            radioMedia.getStyleClass().add("invalido");
+            radioBaixa.getStyleClass().add("invalido");
+        }else{
+            radioAlta.getStyleClass().remove("invalido");
+            radioMedia.getStyleClass().remove("invalido");
+            radioBaixa.getStyleClass().remove("invalido");
         }
 
         return invalido;

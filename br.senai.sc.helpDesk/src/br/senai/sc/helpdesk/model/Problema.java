@@ -5,7 +5,9 @@
  */
 package br.senai.sc.helpdesk.model;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -22,8 +24,9 @@ public class Problema {
     private final IntegerProperty dataEnvio = new SimpleIntegerProperty();
     private final StringProperty descricao = new SimpleStringProperty();
     private final StringProperty empresa = new SimpleStringProperty();
+    private final StringProperty urgencia = new SimpleStringProperty();
+    private final BooleanProperty verificado = new SimpleBooleanProperty(false);
 
-    
     private final StringProperty nomeCli = new SimpleStringProperty();
     private final StringProperty emailCli = new SimpleStringProperty();
     
@@ -31,7 +34,7 @@ public class Problema {
         
     }
       
-    public Problema(Integer codigo, Integer dataEnvio, String descricao, String empresa, Cliente object){
+    public Problema(Integer codigo, Integer dataEnvio, String descricao, String empresa, Cliente object,String urgencia,Boolean verificado){
         
         this.codigo.set(codigo);
         this.dataEnvio.set(dataEnvio);
@@ -40,9 +43,35 @@ public class Problema {
         this.requisitante = object;
         this.nomeCli.set(object.getNome());
         this.emailCli.set(object.getEmail());
+        this.urgencia.set(urgencia);
+        this.verificado.set(verificado);
         
     }  
     
+    public boolean isVerificado() {
+        return verificado.get();
+    }
+
+    public void setVerificado(boolean value) {
+        verificado.set(value);
+    }
+
+    public BooleanProperty verificadoProperty() {
+        return verificado;
+    }
+    
+    
+    public String getUrgencia() {
+        return urgencia.get();
+    }
+
+    public void setUrgencia(String value) {
+        urgencia.set(value);
+    }
+
+    public StringProperty urgenciaProperty() {
+        return urgencia;
+    }
     
     public String getEmpresa() {
         return this.empresa.get();

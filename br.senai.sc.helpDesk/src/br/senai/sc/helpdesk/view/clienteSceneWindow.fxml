@@ -2,30 +2,50 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@stylesClass.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.ClienteSceneWindowController">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1280.0" stylesheets="@stylesClass.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.senai.sc.helpdesk.controller.ClienteSceneWindowController">
    <children>
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="690.0" prefWidth="640.0" styleClass="pane" stylesheets="@stylesClass.css">
          <children>
-            <TextArea fx:id="txtDescricaoProblema" layoutX="60.0" layoutY="232.0" prefHeight="175.0" prefWidth="520.0" styleClass="textfield" />
+            <TextArea fx:id="txtDescricaoProblema" layoutX="60.0" layoutY="197.0" prefHeight="175.0" prefWidth="520.0" styleClass="textfield" />
             <Button fx:id="btnEnviarProblema" layoutX="61.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnEnviarProblemaOnAction" prefHeight="40.0" prefWidth="145.0" text="Enviar">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Label layoutX="60.0" layoutY="162.0" styleClass="label2" text="Descreva o problema:" />
+            <Label layoutX="60.0" layoutY="127.0" styleClass="label2" text="Descreva o problema:" />
             <Label fx:id="lblNomeUsuario" layoutX="480.0" layoutY="50.0" text="Nome Usuario" />
             <Label fx:id="lblEmailUsuario" layoutX="482.0" layoutY="92.0" text="Email Usuario" />
             <TextField fx:id="txtEmpresa" layoutX="351.0" layoutY="457.0" prefHeight="32.0" prefWidth="243.0" promptText="EX:. SoftPlan" />
             <Label layoutX="46.0" layoutY="460.0" text="Empresa desenvolvedora do sistema:" />
+            <RadioButton fx:id="radioBaixa" layoutX="77.0" layoutY="400.0" mnemonicParsing="false" text="Correção Adaptativa">
+               <toggleGroup>
+                  <ToggleGroup fx:id="prioridade" />
+               </toggleGroup>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="radioMedia" layoutX="246.0" layoutY="400.0" mnemonicParsing="false" text="Correção Evolutiva" toggleGroup="$prioridade">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </RadioButton>
+            <RadioButton fx:id="radioAlta" layoutX="405.0" layoutY="400.0" mnemonicParsing="false" text="Problema Corretivo " toggleGroup="$prioridade">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </RadioButton>
          </children>
       </Pane>
       <Pane layoutX="665.0" layoutY="14.0" prefHeight="690.0" prefWidth="600.0" styleClass="pane">

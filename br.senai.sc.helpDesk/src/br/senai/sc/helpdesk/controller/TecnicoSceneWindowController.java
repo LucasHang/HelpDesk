@@ -140,6 +140,7 @@ public class TecnicoSceneWindowController implements Initializable {
             
             lblNomeCliente.textProperty().bind(newValue.nomeCliProperty());
             lblDescricaoProblema.textProperty().bind(newValue.descricaoProperty());
+            
             problemaSelecionado = newValue;
         });
 
@@ -166,6 +167,10 @@ public class TecnicoSceneWindowController implements Initializable {
             novoProblemaResolvido.setProblema(problemaSelecionado);
             novoProblemaResolvido.setTecnico(tecnicoLogado);
             DAOFactory.getProblemaResolvidoDAO().save(novoProblemaResolvido);
+            problemaSelecionado.setVerificado(true);
+            DAOFactory.getProblemaDAO().update(problemaSelecionado);
+            tblProblemas.getItems().remove(problemaSelecionado);
+            btnRecarregarOnAction(null);
             clearFields();
         } catch (SQLException ex) {
             Logger.getLogger(CadastroClienteSceneWindowController.class.getName()).log(Level.SEVERE, null, ex);
@@ -176,7 +181,7 @@ public class TecnicoSceneWindowController implements Initializable {
 
     @FXML
     private void btnRecarregarOnAction(ActionEvent event) throws SQLException {
-        tblProblemas.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaDAO().getAll()));
+        tblProblemas.setItems(FXCollections.observableArrayList(DAOFactory.getProblemaDAO().getAll())); 
     }
 
     private Boolean verificaFields() {

@@ -21,12 +21,14 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
     public void save(Problema problema)throws SQLException {
         String[] codigoGerado = {"codigo"};
         super.preparedStatementInitialize(
-                "insert into problema (codigoCli, empresa, dataEnvio, descricao) values (?,?,?,?)",
+                "insert into problema (codigoCli, empresa, dataEnvio, descricao,urgencia, verificado) values (?,?,?,?,?,?)",
                 codigoGerado);
         super.prepared.setInt(1, problema.getCliente().getCodigo());
         super.prepared.setString(2, problema.getEmpresa());
         super.prepared.setInt(3, problema.getDataEnvio());
         super.prepared.setString(4, problema.getDescricao());
+        super.prepared.setString(5, problema.getUrgencia());
+        super.prepared.setBoolean(6, problema.isVerificado());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
             throw new SQLException("Não foi possível cadastrar o novo problema");
@@ -43,12 +45,14 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
     @Override
     public void update(Problema problema) throws SQLException{
         super.preparedStatementInitialize(
-                "update problema set codigoCli = ?, empresa = ? ,dataEnvio = ?, descricao = ? where codigo = ?");
+                "update problema set codigoCli = ?, empresa = ? ,dataEnvio = ?, descricao = ?, urgencia = ?, verificado = ? where codigo = ?");
         super.prepared.setInt(1, problema.getCliente().getCodigo());
         super.prepared.setString(2, problema.getEmpresa());
         super.prepared.setInt(3, problema.getDataEnvio());
         super.prepared.setString(4, problema.getDescricao());
-        super.prepared.setInt(5, problema.getCodigo());
+        super.prepared.setString(5, problema.getUrgencia());
+        super.prepared.setBoolean(6, problema.isVerificado());
+        super.prepared.setInt(7, problema.getCodigo());
         int linhasAfetadas = super.prepared.executeUpdate();
         if (linhasAfetadas == 0){
             throw new SQLException("Não foi possível aletrar as informações do problema");
@@ -72,7 +76,8 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
     @Override
     public List<Problema> getAll()throws SQLException {
         List<Problema> rows = new ArrayList<>();
-        super.preparedStatementInitialize("select * from problema");
+        super.preparedStatementInitialize("select * from problema where verificado != ?");
+        super.prepared.setBoolean(1,true);
         super.prepared.execute();
         ResultSet resultSetRows = super.prepared.getResultSet();
         while (resultSetRows.next()) {
@@ -80,7 +85,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
+                    resultSetRows.getString("urgencia"),
+                    resultSetRows.getBoolean("verificado")));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -100,7 +107,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
+                    resultSetRows.getString("urgencia"),
+                    resultSetRows.getBoolean("verificado")));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -120,7 +129,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
+                    resultSetRows.getString("urgencia"),
+                    resultSetRows.getBoolean("verificado")));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -140,7 +151,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigo"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigo")),
+                    resultSetRows.getString("urgencia"),
+                    resultSetRows.getBoolean("verificado")));
         }
         resultSetRows.close();
         super.closePreparedStatement();
@@ -160,7 +173,9 @@ public class problemaPostgressDAO extends ConnectionFactory implements problemaD
                     resultSetRows.getInt("dataEnvio"),
                     resultSetRows.getString("descricao"),
                     resultSetRows.getString("empresa"),
-                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli"))));
+                    DAOFactory.getClienteDAO().getClienteByCodigo(resultSetRows.getInt("codigoCli")),
+                    resultSetRows.getString("urgencia"),
+                    resultSetRows.getBoolean("verificado")));
         }
         resultSetRows.close();
         super.closePreparedStatement();

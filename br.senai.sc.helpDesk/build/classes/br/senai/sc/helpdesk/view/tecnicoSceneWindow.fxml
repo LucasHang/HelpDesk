@@ -47,12 +47,17 @@
                         <PropertyValueFactory property="emailCli" />
                     </cellValueFactory>
                 </TableColumn>
-                  <TableColumn prefWidth="277.0" text="Descrição">
+                  <TableColumn prefWidth="203.0" text="Descrição">
                       <cellValueFactory>
                         <PropertyValueFactory property="descricao" />
                     </cellValueFactory>
                   </TableColumn>
-                  <TableColumn fx:id="tblColumnData" prefWidth="123.0" text="Data &#10;Envio">
+                  <TableColumn prefWidth="98.0" text="Tipo">
+                  <cellValueFactory>
+                        <PropertyValueFactory property="urgencia" />
+                    </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn fx:id="tblColumnData" prefWidth="105.0" text="Data&#10;Envio">
                   <cellValueFactory>
                         <PropertyValueFactory property="dataEnvio" />
                     </cellValueFactory>
